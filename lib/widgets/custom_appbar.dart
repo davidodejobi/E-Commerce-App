@@ -65,7 +65,7 @@ class CustomAppBar extends StatelessWidget {
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.shade400,
+                color: Colors.grey.shade200,
                 blurRadius: 35,
                 offset: const Offset(0, 5),
                 spreadRadius: 0.5,

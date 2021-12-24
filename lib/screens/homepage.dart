@@ -7,8 +7,17 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Size size = MediaQuery.of(context).size;
     return Column(
-      children: [CustomAppBar()],
+      children: [
+        const CustomAppBar(),
+        Row(
+          children: const [
+            SearchBar(),
+            FilterOrSettings(),
+          ],
+        ),
+      ],
     );
   }
 }
