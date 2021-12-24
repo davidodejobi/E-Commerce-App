@@ -91,6 +91,9 @@ class AppTheme {
         elevation: 50,
         backgroundColor: Colors.white,
       ),
+      iconTheme: IconThemeData(
+        color: Colors.pink[300],
+      ),
       textTheme: lightTextTheme,
     );
   }
