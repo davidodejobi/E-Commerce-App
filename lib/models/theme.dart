@@ -65,6 +65,11 @@ class AppTheme {
 
   static ThemeData light() {
     return ThemeData(
+      primaryColor: Colors.pink[200],
+      colorScheme: ColorScheme.light(
+        primary: Colors.white,
+        secondary: Colors.pink.shade200,
+      ),
       brightness: Brightness.light,
       checkboxTheme: CheckboxThemeData(
         fillColor: MaterialStateColor.resolveWith(

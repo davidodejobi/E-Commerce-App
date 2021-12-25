@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../constant.dart';
+
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({Key? key}) : super(key: key);
 
@@ -17,24 +19,30 @@ class CustomAppBar extends StatelessWidget {
             icon: Icon(
               Icons.line_style,
               color: Colors.pink[200],
-              size: 30,
+              size: 20,
             ),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text('David Program',
-                  style: TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey)),
-              SizedBox(height: 5),
+            children: [
+              Text(
+                'Suit Store',
+                style: Theme.of(context).textTheme.headline6!.copyWith(
+                      color: Colors.grey,
+                      fontSize: 12,
+                      fontWeight: FontWeight.normal,
+                    ),
+                // style: TextStyle(
+                //     fontSize: 11,
+                //     fontWeight: FontWeight.bold,
+                //     color: Colors.grey)
+              ),
               Text(
                 'Jakarta, INA',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).textTheme.headline6!.copyWith(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
             ],
           ),
@@ -59,17 +67,12 @@ class CustomAppBar extends StatelessWidget {
       borderRadius: BorderRadius.circular(40),
       onTap: onPressed,
       child: Container(
-          height: 40,
-          width: 40,
+          height: 30,
+          width: 30,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             boxShadow: [
-              BoxShadow(
-                color: Colors.grey.shade200,
-                blurRadius: 35,
-                offset: const Offset(0, 5),
-                spreadRadius: 0.5,
-              )
+              kDefaultShadow,
             ],
             color: Colors.white,
           ),
