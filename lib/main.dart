@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '/screens/homepage.dart';
-import 'models/models.dart';
+import '/models/theme.dart';
 
 void main() {
   runApp(MyApp());

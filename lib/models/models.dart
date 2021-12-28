@@ -1,1 +1,2 @@
-export '/models/theme.dart';
+export '/models/category.dart';
+export '/models/product.dart';
