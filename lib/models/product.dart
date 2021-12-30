@@ -1,3 +1,5 @@
+import 'package:e_commerce_app/models/category.dart';
+
 enum SubCategory {
   women,
   men,
@@ -6,7 +8,7 @@ enum SubCategory {
 
 class Product {
   final String? id;
-  final List<String>? categories;
+  final List<ProductCategory>? categories;
   final String? title;
   final String? description;
   final double? price;
@@ -30,8 +32,10 @@ List<Product> items = [
   Product(
     id: 'p1',
     categories: [
-      'c1',
-      'c2',
+      ProductCategory.all,
+      ProductCategory.popular,
+      ProductCategory.recent,
+      ProductCategory.recommended,
     ],
     subCategory: SubCategory.women,
     title: 'Cool Suit',
@@ -44,7 +48,8 @@ List<Product> items = [
   Product(
     id: 'p2',
     categories: [
-      'c1',
+      ProductCategory.all,
+      ProductCategory.recent,
     ],
     subCategory: SubCategory.women,
     title: 'Great Suit',
@@ -52,14 +57,13 @@ List<Product> items = [
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
     price: 59.99,
     imageUrl:
-        'https://i.pinimg.com/564x/8b/47/09/8b4709bafacb81e07b1e5b577ef3573a.jpg',
+        'https://i.pinimg.com/564x/30/c1/dd/30c1dd771c36a5c43b677d894fd796c3.jpg',
   ),
   Product(
     id: 'p3',
     categories: [
-      'c1',
-      'c2',
-      'c3',
+      ProductCategory.all,
+      ProductCategory.popular,
     ],
     subCategory: SubCategory.women,
     title: 'Cool Suit',
@@ -67,13 +71,13 @@ List<Product> items = [
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
     price: 19.99,
     imageUrl:
-        'https://i.pinimg.com/564x/30/c1/dd/30c1dd771c36a5c43b677d894fd796c3.jpg',
+        'https://i.pinimg.com/564x/8b/47/09/8b4709bafacb81e07b1e5b577ef3573a.jpg',
   ),
   Product(
     id: 'p4',
     categories: [
-      'c1',
-      'c4',
+      ProductCategory.all,
+      ProductCategory.recommended,
     ],
     subCategory: SubCategory.women,
     title: 'Cool Suit',
@@ -86,9 +90,9 @@ List<Product> items = [
   Product(
     id: 'p5',
     categories: [
-      'c1',
-      'c3',
-      'c4',
+      ProductCategory.all,
+      ProductCategory.popular,
+      ProductCategory.recent,
     ],
     subCategory: SubCategory.women,
     title: 'Cool Suit',
@@ -101,8 +105,9 @@ List<Product> items = [
   Product(
     id: 'p6',
     categories: [
-      'c1',
-      'c2',
+      ProductCategory.all,
+      ProductCategory.popular,
+      ProductCategory.recommended,
     ],
     subCategory: SubCategory.women,
     title: 'Cool cool suit',
@@ -114,8 +119,8 @@ List<Product> items = [
   Product(
     id: 'p7',
     categories: [
-      'c1',
-      'c3',
+      ProductCategory.all,
+      ProductCategory.recent,
     ],
     subCategory: SubCategory.women,
     title: 'Pinket Suit',
@@ -128,9 +133,8 @@ List<Product> items = [
   Product(
     id: 'p8',
     categories: [
-      'c1',
-      'c2',
-      'c3',
+      ProductCategory.all,
+      ProductCategory.popular,
     ],
     subCategory: SubCategory.women,
     title: 'Pink Suit',
@@ -143,8 +147,9 @@ List<Product> items = [
   Product(
     id: 'p9',
     categories: [
-      'c1',
-      'c3',
+      ProductCategory.all,
+      ProductCategory.popular,
+      ProductCategory.recommended,
     ],
     subCategory: SubCategory.women,
     title: 'Lovely Suit',
@@ -157,10 +162,8 @@ List<Product> items = [
   Product(
     id: 'p10',
     categories: [
-      'c1',
-      'c2',
-      'c3',
-      'c4',
+      ProductCategory.all,
+      ProductCategory.recommended,
     ],
     subCategory: SubCategory.women,
     title: 'Suit',

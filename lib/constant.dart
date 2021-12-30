@@ -17,3 +17,12 @@ final kDefaultGradient = LinearGradient(
   begin: Alignment.topLeft,
   end: Alignment.bottomRight,
 );
+
+final kUnselectedGradient = LinearGradient(
+  colors: [
+    Colors.grey.shade300,
+    Colors.grey.shade300,
+  ],
+  begin: Alignment.topLeft,
+  end: Alignment.bottomRight,
+);

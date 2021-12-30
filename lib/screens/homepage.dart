@@ -5,8 +5,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '/widgets/widgets.dart';
 import '/models/models.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  ProductCategory? _isPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +44,18 @@ class HomePage extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       itemCount: mainCategory.length,
                       itemBuilder: (context, index) {
-                        return buildCategory(
-                          context,
-                          mainCategory[index].title,
-                        );
+                        return buildCategory(context, mainCategory[index].title,
+                            onTap: () {
+                          setState(() {
+                            _isPressed = mainCategory[index].id;
+                          });
+                        },
+                            gradient: _isPressed == mainCategory[index].id
+                                ? kDefaultGradient
+                                : kUnselectedGradient,
+                            color: _isPressed == mainCategory[index].id
+                                ? Colors.white
+                                : Colors.grey);
                       })),
               const SizedBox(
                 height: kDefaultPadding,
@@ -141,31 +156,37 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Container buildCategory(
+  InkWell buildCategory(
     BuildContext context,
-    String text,
-  ) {
-    return Container(
-      height: 35,
-      margin: const EdgeInsets.only(right: kDefaultPadding / 2),
-      decoration: BoxDecoration(
-        gradient: kDefaultGradient,
-        borderRadius: BorderRadius.circular(20),
+    String text, {
+    VoidCallback? onTap,
+    Gradient? gradient,
+    Color? color,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 35,
+        margin: const EdgeInsets.only(right: kDefaultPadding / 2),
+        decoration: BoxDecoration(
+          gradient: gradient,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Center(
+            child: Padding(
+          padding: const EdgeInsets.only(
+            left: kDefaultPadding,
+            right: kDefaultPadding,
+          ),
+          child: Text(
+            text,
+            style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color: color,
+                  fontSize: 16,
+                ),
+          ),
+        )),
       ),
-      child: Center(
-          child: Padding(
-        padding: const EdgeInsets.only(
-          left: kDefaultPadding,
-          right: kDefaultPadding,
-        ),
-        child: Text(
-          text,
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                color: Colors.white,
-                fontSize: 16,
-              ),
-        ),
-      )),
     );
   }
 }
