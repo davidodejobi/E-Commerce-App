@@ -56,72 +56,70 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: pages[currentIndex!],
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.only(
-            bottom: 20.0,
-            left: 20.0,
-            right: 20.0,
-          ),
-          child: ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(30)),
-            child: BottomNavigationBar(
-              currentIndex: currentIndex!,
-              type: BottomNavigationBarType.fixed,
-              showSelectedLabels: false,
-              showUnselectedLabels: false,
-              iconSize: 30,
-              items: [
-                BottomNavigationBarItem(
-                  icon: SvgPicture.asset(
-                    'assets/icons/homepage.svg',
-                    color: Colors.grey,
-                  ),
-                  backgroundColor: Colors.pink[200],
-                  activeIcon: SvgPicture.asset(
-                    'assets/icons/homepage.svg',
-                    color: Colors.pink[200],
-                  ),
-                  label: '',
+    return Scaffold(
+      body: pages[currentIndex!],
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(
+          bottom: 20.0,
+          left: 20.0,
+          right: 20.0,
+        ),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(30)),
+          child: BottomNavigationBar(
+            currentIndex: currentIndex!,
+            type: BottomNavigationBarType.fixed,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            iconSize: 30,
+            items: [
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  'assets/icons/homepage.svg',
+                  color: Colors.grey,
                 ),
-                BottomNavigationBarItem(
-                  icon: SvgPicture.asset(
-                    'assets/icons/invoice.svg',
-                    color: Colors.grey,
-                  ),
-                  activeIcon: SvgPicture.asset(
-                    'assets/icons/invoice.svg',
-                    color: Colors.pink[200],
-                  ),
-                  label: '',
+                backgroundColor: Colors.pink[200],
+                activeIcon: SvgPicture.asset(
+                  'assets/icons/homepage.svg',
+                  color: Colors.pink[200],
                 ),
-                BottomNavigationBarItem(
-                  icon: SvgPicture.asset(
-                    'assets/icons/shopping-cart.svg',
-                    color: Colors.grey,
-                  ),
-                  activeIcon: SvgPicture.asset(
-                    'assets/icons/shopping-cart.svg',
-                    color: Colors.pink[200],
-                  ),
-                  label: '',
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  'assets/icons/invoice.svg',
+                  color: Colors.grey,
                 ),
-                BottomNavigationBarItem(
-                  icon: SvgPicture.asset(
-                    'assets/icons/user.svg',
-                    color: Colors.grey,
-                  ),
-                  activeIcon: SvgPicture.asset(
-                    'assets/icons/user.svg',
-                    color: Colors.pink[200],
-                  ),
-                  label: '',
+                activeIcon: SvgPicture.asset(
+                  'assets/icons/invoice.svg',
+                  color: Colors.pink[200],
                 ),
-              ],
-              onTap: selectedBar,
-            ),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  'assets/icons/shopping-cart.svg',
+                  color: Colors.grey,
+                ),
+                activeIcon: SvgPicture.asset(
+                  'assets/icons/shopping-cart.svg',
+                  color: Colors.pink[200],
+                ),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  'assets/icons/user.svg',
+                  color: Colors.grey,
+                ),
+                activeIcon: SvgPicture.asset(
+                  'assets/icons/user.svg',
+                  color: Colors.pink[200],
+                ),
+                label: '',
+              ),
+            ],
+            onTap: selectedBar,
           ),
         ),
       ),

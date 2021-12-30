@@ -19,7 +19,7 @@ class AdvertisementCard extends StatelessWidget {
         ),
         gradient: kDefaultGradient,
       ),
-      height: 150,
+      height: 130,
       width: double.infinity,
       child: Row(
         children: [
@@ -29,13 +29,14 @@ class AdvertisementCard extends StatelessWidget {
             children: [
               Positioned(
                 top: -20,
-                left: -10,
+                left: -20,
                 child: Image.asset(
                   'assets/images/woman-shopping.png',
-                  scale: 1.855 / 1,
+                  scale: 2.1 / 1,
                 ),
               ),
               Positioned(
+                // right: 20,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
