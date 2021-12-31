@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '/widgets/widgets.dart';
 import '../constant.dart';
 
 class CustomAppBar extends StatelessWidget {
@@ -15,7 +16,7 @@ class CustomAppBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          buildActions(
+          RoundedIconButton(
             onPressed: () {},
             icon: Icon(
               Icons.line_style,
@@ -47,44 +48,31 @@ class CustomAppBar extends StatelessWidget {
               ),
             ],
           ),
-          buildActions(
+          RoundedIconButton(
             onPressed: () {},
             icon: Container(
               width: 30,
               height: 30,
               decoration: BoxDecoration(
-                shape: BoxShape.circle,
                 boxShadow: [kDefaultShadow],
               ),
               child: CachedNetworkImage(
-                imageUrl:
-                    'https://avatars.githubusercontent.com/u/63846399?s=400&u=66d28bb6d2d4ddc4c38d1d3a87da5890ca4ceb49&v=4',
-                placeholder: (context, url) =>
-                    const CircularProgressIndicator(),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-              ),
+                  imageUrl:
+                      'https://avatars.githubusercontent.com/u/63846399?s=400&u=66d28bb6d2d4ddc4c38d1d3a87da5890ca4ceb49&v=4',
+                  placeholder: (context, url) =>
+                      const CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  imageBuilder: (context, imageProvider) {
+                    // you can access to imageProvider
+                    return CircleAvatar(
+                      // or any widget that use imageProvider like (PhotoView)
+                      backgroundImage: imageProvider,
+                    );
+                  }),
             ),
           ),
         ],
       ),
-    );
-  }
-
-  InkWell buildActions({VoidCallback? onPressed, Widget? icon}) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(40),
-      onTap: onPressed,
-      child: Container(
-          height: 30,
-          width: 30,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            boxShadow: [
-              kDefaultShadow,
-            ],
-            color: Colors.white,
-          ),
-          child: icon!),
     );
   }
 }

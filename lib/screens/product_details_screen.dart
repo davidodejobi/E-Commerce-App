@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce_app/constant.dart';
-import 'package:e_commerce_app/models/models.dart';
-import 'package:e_commerce_app/widgets/widgets.dart';
+import 'package:e_commerce_app/widgets/rounded_icon_button.dart';
 import 'package:flutter/material.dart';
+
+import '../constant.dart';
+import '../constant.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   final String? id;
@@ -29,39 +31,61 @@ class ProductDetailsScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            Hero(
-              tag: id!,
-              child: CachedNetworkImage(
-                imageBuilder: (context, imageProvider) => Container(
-                  child: Stack(
-                    children: [
-                      RoundedIconButton(
-                        icon: Icon(Icons.ac_unit),
-                      )
-                    ],
-                  ),
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.8),
-                        offset: const Offset(0, 15),
-                        blurRadius: 30,
+            Stack(
+              children: [
+                Hero(
+                  tag: id!,
+                  child: CachedNetworkImage(
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.8),
+                            offset: const Offset(0, 15),
+                            blurRadius: 30,
+                          ),
+                        ],
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(40),
+                          bottomRight: Radius.circular(40),
+                        ),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ],
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(40),
-                      bottomRight: Radius.circular(40),
                     ),
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
-                    ),
+                    height: size.height * 0.6,
+                    width: size.width,
+                    imageUrl: imageUrl!,
                   ),
                 ),
-                height: size.height * 0.6,
-                width: size.width,
-                imageUrl: imageUrl!,
-              ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 20,
+                  ),
+                  child: Row(
+                    children: [
+                      RoundedIconButton(
+                        icon: Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          color: kPrimaryColor,
+                        ),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                      const Spacer(),
+                      RoundedIconButton(
+                        icon: Icon(
+                          Icons.favorite_border_rounded,
+                          color: kPrimaryColor,
+                        ),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
             const SizedBox(
               height: kDefaultPadding * 1.5,
@@ -126,26 +150,23 @@ class ProductDetailsScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
               child: Row(
                 children: [
-                  Expanded(
-                    flex: 3,
-                    child: Container(
-                      height: 60,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: kDefaultPadding,
-                      ),
-                      decoration: BoxDecoration(
-                        gradient: kDefaultGradient,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Buy Now',
-                          style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                        ),
+                  Container(
+                    height: 60,
+                    width: size.width * 0.8 - kDefaultPadding,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: kDefaultPadding,
+                    ),
+                    decoration: BoxDecoration(
+                      gradient: kDefaultGradient,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Buy Now',
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                       ),
                     ),
                   ),

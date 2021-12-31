@@ -4,4 +4,5 @@ export 'search_bar.dart';
 export 'advertisement_card.dart';
 export 'categories_button.dart';
 export 'product_list.dart';
-export 'product_details.dart';
+export '../screens/product_details_screen.dart';
+export 'rounded_icon_button.dart';
