@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
+import '/models/models.dart';
 import '/screens/homepage.dart';
 import '/models/theme.dart';
 
@@ -16,10 +18,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'E Commerce App',
-      theme: theme,
-      home: const HomeScreen(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => Products()),
+        ChangeNotifierProvider(create: (_) => Product()),
+      ],
+      child: MaterialApp(
+        title: 'E Commerce App',
+        theme: theme,
+        home: const HomeScreen(),
+      ),
     );
   }
 }

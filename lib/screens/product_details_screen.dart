@@ -1,28 +1,27 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce_app/constant.dart';
-import 'package:e_commerce_app/widgets/rounded_icon_button.dart';
+import 'package:e_commerce_app/models/models.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../constant.dart';
+import '/models/product.dart';
+import '/widgets/rounded_icon_button.dart';
 import '../constant.dart';
 
-class ProductDetailsScreen extends StatelessWidget {
-  final String? id;
-  final String? imageUrl;
-  final String? description;
-  final String? title;
-  final String? subCategory;
-  final double? price;
+class ProductDetailsScreen extends StatefulWidget {
+  final Product? product;
+  final Function()? notifyParent;
   const ProductDetailsScreen({
-    this.id,
-    this.description,
-    this.imageUrl,
-    this.price,
-    this.subCategory,
-    this.title,
+    @required this.notifyParent,
+    this.product,
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
+}
+
+class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -34,7 +33,7 @@ class ProductDetailsScreen extends StatelessWidget {
             Stack(
               children: [
                 Hero(
-                  tag: id!,
+                  tag: widget.product!.id!,
                   child: CachedNetworkImage(
                     imageBuilder: (context, imageProvider) => Container(
                       decoration: BoxDecoration(
@@ -57,7 +56,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     ),
                     height: size.height * 0.6,
                     width: size.width,
-                    imageUrl: imageUrl!,
+                    imageUrl: widget.product!.imageUrl!,
                   ),
                 ),
                 Container(
@@ -71,16 +70,23 @@ class ProductDetailsScreen extends StatelessWidget {
                         icon: Icon(
                           Icons.arrow_back_ios_new_rounded,
                           color: kPrimaryColor,
+                          size: 18,
                         ),
                         onPressed: () => Navigator.pop(context),
                       ),
                       const Spacer(),
                       RoundedIconButton(
                         icon: Icon(
-                          Icons.favorite_border_rounded,
+                          widget.product!.isFavorite!
+                              ? Icons.favorite_sharp
+                              : Icons.favorite_border,
                           color: kPrimaryColor,
+                          size: 18,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          widget.notifyParent;
+                          widget.product!.toggleFavoriteStatus();
+                        },
                       ),
                     ],
                   ),
@@ -100,13 +106,13 @@ class ProductDetailsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        title!,
+                        widget.product!.title!,
                         style: Theme.of(context).textTheme.headline5!.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                       ),
                       Text(
-                        subCategory!.toString().split('.').last,
+                        widget.product!.subCategory!.toString().split('.').last,
                         style: Theme.of(context).textTheme.bodyText1!.copyWith(
                               fontWeight: FontWeight.bold,
                               color: Colors.grey,
@@ -116,7 +122,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   ),
                   const Spacer(),
                   Text(
-                    '\$$price',
+                    '\$${widget.product!.price!}',
                     style: Theme.of(context).textTheme.headline5!.copyWith(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -134,7 +140,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 right: kDefaultPadding,
               ),
               child: Text(
-                description!,
+                widget.product!.description!,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodyText1!.copyWith(
@@ -148,46 +154,50 @@ class ProductDetailsScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-              child: Row(
-                children: [
-                  Container(
-                    height: 60,
-                    width: size.width * 0.8 - kDefaultPadding,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: kDefaultPadding,
-                    ),
-                    decoration: BoxDecoration(
-                      gradient: kDefaultGradient,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Buy Now',
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: kDefaultPadding,
-                  ),
-                  Expanded(
-                      flex: 1,
+              child: SizedBox(
+                width: double.infinity,
+                height: 60,
+                child: Row(
+                  children: [
+                    Expanded(
                       child: Container(
                         height: 60,
-                        width: 60,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: kDefaultPadding,
+                        ),
                         decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          shape: BoxShape.circle,
+                          gradient: kDefaultGradient,
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        child: Icon(
-                          Icons.shopping_cart_rounded,
-                          color: kPrimaryColor,
+                        child: Center(
+                          child: Text(
+                            'Buy Now',
+                            style:
+                                Theme.of(context).textTheme.bodyText1!.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                          ),
                         ),
-                      )),
-                ],
+                      ),
+                    ),
+                    const SizedBox(
+                      width: kDefaultPadding,
+                    ),
+                    Container(
+                      height: 60,
+                      width: 60,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.shopping_cart_rounded,
+                        color: kPrimaryColor,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             )
           ],

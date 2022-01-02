@@ -14,6 +14,9 @@ class RoundedIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      splashColor: Colors.grey,
+      focusColor: kPrimaryColor,
+      highlightColor: Colors.purple,
       borderRadius: BorderRadius.circular(40),
       onTap: onPressed,
       child: Container(
