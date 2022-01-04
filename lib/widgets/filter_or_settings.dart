@@ -1,28 +1,51 @@
+import 'package:e_commerce_app/models/filter.dart';
+import 'package:e_commerce_app/models/models.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../constant.dart';
 
+enum filterOptions {
+  favorites,
+  all,
+}
+
 class FilterOrSettings extends StatelessWidget {
-  const FilterOrSettings({
-    Key? key,
-  }) : super(key: key);
+  const FilterOrSettings({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final filter = Provider.of<Filter>(context);
     return Expanded(
-      flex: 3,
+      flex: 2,
       child: Container(
-        child: IconButton(
-          onPressed: () {},
+        child: PopupMenuButton(
           icon: const Icon(
             Icons.tune_rounded,
-            color: kSecondaryColor,
-            size: 25,
+            color: Colors.white,
           ),
+          onSelected: (filterOptions value) {
+            if (value == filterOptions.favorites) {
+              filter.favoriteFilter();
+            } else {
+              filter.allFilter();
+            }
+          },
+          itemBuilder: (BuildContext context) {
+            return [
+              const PopupMenuItem(
+                value: filterOptions.favorites,
+                child: Text('Favorites'),
+              ),
+              const PopupMenuItem(
+                value: filterOptions.all,
+                child: Text('All'),
+              ),
+            ];
+          },
         ),
         margin: const EdgeInsets.only(
           left: kDefaultPadding / 4,
-          right: kDefaultPadding,
         ),
         height: 40,
         decoration: BoxDecoration(
