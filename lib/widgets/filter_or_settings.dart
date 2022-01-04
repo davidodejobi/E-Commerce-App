@@ -6,8 +6,8 @@ import 'package:provider/provider.dart';
 import '../constant.dart';
 
 enum filterOptions {
-  all,
   favorites,
+  all,
 }
 
 class FilterOrSettings extends StatelessWidget {
@@ -26,19 +26,19 @@ class FilterOrSettings extends StatelessWidget {
           ),
           onSelected: (filterOptions value) {
             if (value == filterOptions.favorites) {
-              filter.trueFilter();
+              filter.favoriteFilter();
             } else {
-              filter.falseFilter();
+              filter.allFilter();
             }
           },
           itemBuilder: (BuildContext context) {
             return [
               const PopupMenuItem(
-                value: filterOptions.all,
+                value: filterOptions.favorites,
                 child: Text('Favorites'),
               ),
               const PopupMenuItem(
-                value: filterOptions.favorites,
+                value: filterOptions.all,
                 child: Text('All'),
               ),
             ];

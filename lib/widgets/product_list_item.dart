@@ -14,10 +14,6 @@ class ProductListItem extends StatefulWidget {
 }
 
 class _ProductListItemState extends State<ProductListItem> {
-  refresh() {
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context);
@@ -28,7 +24,6 @@ class _ProductListItemState extends State<ProductListItem> {
           context,
           MaterialPageRoute(
             builder: (context) => ProductDetailsScreen(
-              notifyParent: refresh,
               product: product,
             ),
           ),

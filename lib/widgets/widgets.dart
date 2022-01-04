@@ -7,3 +7,5 @@ export 'product_list.dart';
 export '../screens/product_details_screen.dart';
 export 'rounded_icon_button.dart';
 export 'product_list_item.dart';
+export 'badge.dart';
+export 'bottom_nav_bar.dart';

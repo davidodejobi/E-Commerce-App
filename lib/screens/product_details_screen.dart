@@ -4,36 +4,31 @@ import 'package:e_commerce_app/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '/models/product.dart';
 import '/widgets/rounded_icon_button.dart';
 import '../constant.dart';
 
-class ProductDetailsScreen extends StatefulWidget {
+class ProductDetailsScreen extends StatelessWidget {
   final Product? product;
-  final Function()? notifyParent;
   const ProductDetailsScreen({
-    @required this.notifyParent,
     this.product,
     Key? key,
   }) : super(key: key);
 
   @override
-  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
-}
-
-class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
-  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
+    final cart = Provider.of<Cart>(context, listen: false);
 
     return Scaffold(
       body: SafeArea(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Stack(
               children: [
                 Hero(
-                  tag: widget.product!.id!,
+                  tag: product!.id!,
                   child: CachedNetworkImage(
                     imageBuilder: (context, imageProvider) => Container(
                       decoration: BoxDecoration(
@@ -56,7 +51,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                     height: size.height * 0.6,
                     width: size.width,
-                    imageUrl: widget.product!.imageUrl!,
+                    imageUrl: product!.imageUrl!,
                   ),
                 ),
                 Container(
@@ -77,15 +72,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       const Spacer(),
                       RoundedIconButton(
                         icon: Icon(
-                          widget.product!.isFavorite!
+                          product!.isFavorite!
                               ? Icons.favorite_sharp
                               : Icons.favorite_border,
                           color: kPrimaryColor,
                           size: 18,
                         ),
                         onPressed: () {
-                          widget.notifyParent;
-                          widget.product!.toggleFavoriteStatus();
+                          product!.toggleFavoriteStatus();
                         },
                       ),
                     ],
@@ -106,13 +100,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.product!.title!,
+                        product!.title!,
                         style: Theme.of(context).textTheme.headline5!.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                       ),
                       Text(
-                        widget.product!.subCategory!.toString().split('.').last,
+                        product!.subCategory!.toString().split('.').last,
                         style: Theme.of(context).textTheme.bodyText1!.copyWith(
                               fontWeight: FontWeight.bold,
                               color: Colors.grey,
@@ -122,7 +116,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   ),
                   const Spacer(),
                   Text(
-                    '\$${widget.product!.price!}',
+                    '\$${product!.price!}',
                     style: Theme.of(context).textTheme.headline5!.copyWith(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -140,7 +134,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 right: kDefaultPadding,
               ),
               child: Text(
-                widget.product!.description!,
+                product!.description!,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodyText1!.copyWith(
@@ -149,34 +143,39 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
               ),
             ),
-            const SizedBox(
-              height: kDefaultPadding * 2,
-            ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+              padding: const EdgeInsets.symmetric(
+                horizontal: kDefaultPadding,
+                vertical: kDefaultPadding,
+              ),
               child: SizedBox(
                 width: double.infinity,
                 height: 60,
                 child: Row(
                   children: [
                     Expanded(
-                      child: Container(
-                        height: 60,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: kDefaultPadding,
-                        ),
-                        decoration: BoxDecoration(
-                          gradient: kDefaultGradient,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Buy Now',
-                            style:
-                                Theme.of(context).textTheme.bodyText1!.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Container(
+                          height: 60,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: kDefaultPadding,
+                          ),
+                          decoration: BoxDecoration(
+                            gradient: kDefaultGradient,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Buy Now',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                            ),
                           ),
                         ),
                       ),
@@ -184,16 +183,27 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     const SizedBox(
                       width: kDefaultPadding,
                     ),
-                    Container(
-                      height: 60,
-                      width: 60,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.shopping_cart_rounded,
-                        color: kPrimaryColor,
+                    InkWell(
+                      hoverColor: Colors.grey[700],
+                      onTap: () {
+                        cart.addItem(
+                          productId: product!.id,
+                          price: product!.price,
+                          title: product!.title,
+                        );
+                      },
+                      borderRadius: BorderRadius.circular(60),
+                      child: Container(
+                        height: 60,
+                        width: 60,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.shopping_cart_rounded,
+                          color: kPrimaryColor,
+                        ),
                       ),
                     ),
                   ],

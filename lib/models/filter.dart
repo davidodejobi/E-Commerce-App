@@ -3,12 +3,12 @@ import 'package:flutter/foundation.dart';
 class Filter with ChangeNotifier {
   var selectedOption = false;
 
-  void falseFilter() {
+  void favoriteFilter() {
     selectedOption = true;
     notifyListeners();
   }
 
-  void trueFilter() {
+  void allFilter() {
     selectedOption = false;
     notifyListeners();
   }

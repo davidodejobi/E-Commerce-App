@@ -19,7 +19,7 @@ class CustomAppBar extends StatelessWidget {
           RoundedIconButton(
             onPressed: () {},
             icon: Icon(
-              Icons.line_style,
+              Icons.menu,
               color: Colors.pink[200],
               size: 20,
             ),

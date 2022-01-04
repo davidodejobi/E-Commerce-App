@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +14,7 @@ class ProductList extends StatelessWidget {
   Widget build(BuildContext context) {
     final productsData = Provider.of<Products>(context);
     final filterProduct = Provider.of<Filter>(context).selectedOption;
+
     final products =
         filterProduct ? productsData.favoriteItems : productsData.items;
 
