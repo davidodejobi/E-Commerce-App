@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
+import '/screens/cart_screen.dart';
 import '/widgets/widgets.dart';
 import '../constant.dart';
-import '/screens/homepage.dart';
+import '../screens/home_screen.dart';
 import '/models/models.dart';
 
 // ignore: must_be_immutable
@@ -15,10 +16,7 @@ class BottomNavBar extends StatelessWidget {
     const HomePage(),
     //Replace with screen 2
     Container(),
-    //Replace with screen 3
-    Container(
-      color: Colors.green,
-    ),
+    const CartScreen(),
     //Replace with screen 4
     Container(
       color: Colors.blue,
@@ -40,64 +38,50 @@ class BottomNavBar extends StatelessWidget {
           child: BottomNavigationBar(
             currentIndex: manager.currentIndex!,
             type: BottomNavigationBarType.fixed,
+            selectedItemColor: kPrimaryColor,
+            unselectedItemColor: Colors.grey,
             showSelectedLabels: false,
             showUnselectedLabels: false,
             iconSize: 30,
             items: [
-              BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                  'assets/icons/homepage.svg',
-                  color: Colors.grey,
-                ),
-                backgroundColor: Colors.pink[200],
-                activeIcon: SvgPicture.asset(
-                  'assets/icons/homepage.svg',
-                  color: Colors.pink[200],
+              const BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.home_rounded,
+                  size: 25,
                 ),
                 label: '',
               ),
-              BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                  'assets/icons/invoice.svg',
-                  color: Colors.grey,
-                ),
-                activeIcon: SvgPicture.asset(
-                  'assets/icons/invoice.svg',
-                  color: Colors.pink[200],
+              const BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.receipt_sharp,
+                  size: 25,
                 ),
                 label: '',
               ),
               BottomNavigationBarItem(
                 icon: Consumer<Cart>(
-                  builder: (_, cart, ch) => IconWithBadge(
-                    child: ch!,
+                  builder: (_, cart, __) => IconWithBadge(
+                    child: const Icon(
+                      Icons.shopping_cart_outlined,
+                      size: 25,
+                    ),
                     value: cart.itemCount.toString(),
                     color: kPrimaryColor,
                   ),
-                  child: SvgPicture.asset(
-                    'assets/icons/shopping-cart.svg',
-                    color: Colors.grey,
-                  ),
-                ),
-                activeIcon: SvgPicture.asset(
-                  'assets/icons/shopping-cart.svg',
-                  color: Colors.pink[200],
                 ),
                 label: '',
               ),
-              BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                  'assets/icons/user.svg',
-                  color: Colors.grey,
-                ),
-                activeIcon: SvgPicture.asset(
-                  'assets/icons/user.svg',
-                  color: Colors.pink[200],
+              const BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.person,
+                  size: 25,
                 ),
                 label: '',
               ),
             ],
-            onTap: manager.currentTap,
+            onTap: (index) {
+              manager.currentTap(index);
+            },
           ),
         ),
       ),

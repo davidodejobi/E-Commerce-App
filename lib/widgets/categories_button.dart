@@ -15,7 +15,6 @@ class CategoriesButton extends StatelessWidget {
 
     return Container(
       height: 30,
-      padding: const EdgeInsets.only(left: kDefaultPadding),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: mainCategory.length,

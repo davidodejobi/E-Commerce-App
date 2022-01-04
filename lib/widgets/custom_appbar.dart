@@ -5,13 +5,16 @@ import '/widgets/widgets.dart';
 import '../constant.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({Key? key}) : super(key: key);
+  final Widget? title;
+  const CustomAppBar({
+    this.title,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      height: 100,
+    return SizedBox(
+      height: 70,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -24,30 +27,7 @@ class CustomAppBar extends StatelessWidget {
               size: 20,
             ),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Suit Store',
-                style: Theme.of(context).textTheme.headline6!.copyWith(
-                      color: Colors.grey,
-                      fontSize: 12,
-                      fontWeight: FontWeight.normal,
-                    ),
-                // style: TextStyle(
-                //     fontSize: 11,
-                //     fontWeight: FontWeight.bold,
-                //     color: Colors.grey)
-              ),
-              Text(
-                'Jakarta, INA',
-                style: Theme.of(context).textTheme.headline6!.copyWith(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-            ],
-          ),
+          title!,
           RoundedIconButton(
             onPressed: () {},
             icon: Container(

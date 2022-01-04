@@ -10,9 +10,6 @@ class AdvertisementCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: kDefaultPadding,
-      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(
           kDefaultPadding,

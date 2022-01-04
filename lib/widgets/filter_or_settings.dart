@@ -17,7 +17,7 @@ class FilterOrSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     final filter = Provider.of<Filter>(context);
     return Expanded(
-      flex: 3,
+      flex: 2,
       child: Container(
         child: PopupMenuButton(
           icon: const Icon(
@@ -46,7 +46,6 @@ class FilterOrSettings extends StatelessWidget {
         ),
         margin: const EdgeInsets.only(
           left: kDefaultPadding / 4,
-          right: kDefaultPadding,
         ),
         height: 40,
         decoration: BoxDecoration(

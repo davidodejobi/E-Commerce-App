@@ -12,13 +12,6 @@ class SearchBar extends StatelessWidget {
     return Expanded(
       flex: 12,
       child: Container(
-        // child: FittedBox(
-        //   fit: BoxFit.fill,
-        //   child: SvgPicture.asset(
-        //     'assets/icons/search.svg',
-        //     fit: BoxFit.cover,
-        //   ),
-        // ),
         child: Row(
           children: [
             IconButton(
@@ -46,7 +39,6 @@ class SearchBar extends StatelessWidget {
           ],
         ),
         margin: const EdgeInsets.only(
-          left: kDefaultPadding,
           right: kDefaultPadding / 4,
         ),
         height: 40,
