@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce_app/constant.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '/widgets/widgets.dart';
@@ -135,11 +134,78 @@ class CartScreen extends StatelessWidget {
                                   color: Colors.black, size: 15),
                             )
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ],
-                ))
+                )),
+            const SizedBox(
+              height: kDefaultPadding * 2,
+            ),
+            SizedBox(
+              width: double.infinity,
+              height: kDefaultPadding * 3,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: kDefaultPadding * 2.7,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Total',
+                          style:
+                              Theme.of(context).textTheme.bodyText2!.copyWith(
+                                    color: Colors.grey[500],
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 15,
+                                  ),
+                        ),
+                        Text(
+                          '\$150.00',
+                          style:
+                              Theme.of(context).textTheme.headline1!.copyWith(
+                                    color: Colors.black,
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    width: kDefaultPadding * 2,
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Container(
+                        height: 60,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: kDefaultPadding,
+                        ),
+                        decoration: BoxDecoration(
+                          gradient: kDefaultGradient,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Buy Now',
+                            style:
+                                Theme.of(context).textTheme.bodyText1!.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
