@@ -1,14 +1,20 @@
 import 'package:flutter/foundation.dart';
 
-class CartItem {
+import '/models/models.dart';
+
+class CartItem with ChangeNotifier {
   final String? id;
   final String? title;
+  final String? imageUrl;
+  final SubCategory? subCategory;
   final int? quantity;
   final double? price;
 
   CartItem({
     required this.id,
     required this.title,
+    required this.imageUrl,
+    required this.subCategory,
     required this.quantity,
     required this.price,
   });
@@ -33,13 +39,22 @@ class Cart with ChangeNotifier {
     return total;
   }
 
-  void addItem({String? productId, String? title, double? price}) {
+  void addItem({
+    String? productId,
+    String? title,
+    String? imageUrl,
+    SubCategory? subCategory,
+    double? price,
+    bool? isBuying,
+  }) {
     if (_items.containsKey(productId)) {
       _items.update(
         productId!,
         (existingCartItem) => CartItem(
           id: existingCartItem.id,
           title: existingCartItem.title,
+          imageUrl: existingCartItem.imageUrl,
+          subCategory: existingCartItem.subCategory,
           quantity: existingCartItem.quantity! + 1,
           price: existingCartItem.price,
         ),
@@ -50,6 +65,8 @@ class Cart with ChangeNotifier {
         () => CartItem(
           id: DateTime.now().toString(),
           title: title,
+          imageUrl: imageUrl,
+          subCategory: subCategory,
           quantity: 1,
           price: price,
         ),
@@ -73,6 +90,8 @@ class Cart with ChangeNotifier {
         (existingCartItem) => CartItem(
           id: existingCartItem.id,
           title: existingCartItem.title,
+          imageUrl: existingCartItem.imageUrl,
+          subCategory: existingCartItem.subCategory,
           quantity: existingCartItem.quantity! - 1,
           price: existingCartItem.price,
         ),
@@ -83,8 +102,79 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
+  void addSingleItem(String productId) {
+    if (_items[productId]!.quantity! > 0) {
+      _items.update(
+        productId,
+        (existingCartItem) => CartItem(
+          id: existingCartItem.id,
+          title: existingCartItem.title,
+          imageUrl: existingCartItem.imageUrl,
+          subCategory: existingCartItem.subCategory,
+          quantity: existingCartItem.quantity! + 1,
+          price: existingCartItem.price,
+        ),
+      );
+    }
+
+    notifyListeners();
+  }
+
   void clear() {
     _items = {};
     notifyListeners();
   }
+
+  // bool isChecked = false;
+
+  // void buttonChecked(bool? checked) {
+  //   isChecked = checked!;
+  //   notifyListeners();
+  // }
+
+  // void deactivateItem({
+  //   String? productId,
+  //   bool? isChecked,
+  //   int? quantity,
+  //   double? price,
+  // }) {
+  //   if (_items[productId]!.quantity! >= 0 || isChecked == false) {
+  //     _items.update(
+  //       productId!,
+  //       (existingCartItem) => CartItem(
+  //         id: existingCartItem.id,
+  //         title: existingCartItem.title,
+  //         imageUrl: existingCartItem.imageUrl,
+  //         subCategory: existingCartItem.subCategory,
+  //         quantity: quantity,
+  //         price: price,
+  //         isBuying: existingCartItem.isBuying,
+  //       ),
+  //     );
+  //   }
+  //   notifyListeners();
+  // }
+
+  // void activateItem({
+  //   String? productId,
+  //   bool? isChecked,
+  //   // int? quantity,
+  //   // double? price,
+  // }) {
+  //   if (_items[productId]!.quantity! == 0 || isChecked == false) {
+  //     _items.update(
+  //       productId!,
+  //       (existingCartItem) => CartItem(
+  //         id: existingCartItem.id,
+  //         title: existingCartItem.title,
+  //         imageUrl: existingCartItem.imageUrl,
+  //         subCategory: existingCartItem.subCategory,
+  //         quantity: existingCartItem.quantity,
+  //         price: existingCartItem.price,
+  //         isBuying: existingCartItem.isBuying,
+  //       ),
+  //     );
+  //   }
+  //   notifyListeners();
+  // }
 }

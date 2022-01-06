@@ -37,10 +37,10 @@ class BottomNavBar extends StatelessWidget {
           child: BottomNavigationBar(
             currentIndex: manager.currentIndex!,
             type: BottomNavigationBarType.fixed,
-            selectedItemColor: kPrimaryColor,
-            unselectedItemColor: Colors.grey,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
+            selectedItemColor:
+                Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
+            unselectedItemColor:
+                Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
             iconSize: 30,
             items: [
               const BottomNavigationBarItem(
