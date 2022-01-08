@@ -24,6 +24,7 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final manager = Provider.of<Manager>(context);
+    final itemCount = Provider.of<Cart>(context, listen: true).itemCount;
     return Scaffold(
       body: pages[manager.currentIndex!],
       bottomNavigationBar: Padding(
@@ -57,19 +58,27 @@ class BottomNavBar extends StatelessWidget {
                 ),
                 label: '',
               ),
-              BottomNavigationBarItem(
-                icon: Consumer<Cart>(
-                  builder: (_, cart, __) => IconWithBadge(
-                    child: const Icon(
-                      Icons.shopping_cart_outlined,
-                      size: 25,
+              itemCount <= 0
+                  ? const BottomNavigationBarItem(
+                      icon: Icon(
+                        Icons.shopping_cart_outlined,
+                        size: 25,
+                      ),
+                      label: '',
+                    )
+                  : BottomNavigationBarItem(
+                      icon: Consumer<Cart>(
+                        builder: (_, cart, __) => IconWithBadge(
+                          child: const Icon(
+                            Icons.shopping_cart_outlined,
+                            size: 25,
+                          ),
+                          value: cart.itemCount.toString(),
+                          color: kPrimaryColor,
+                        ),
+                      ),
+                      label: '',
                     ),
-                    value: cart.itemCount.toString(),
-                    color: kPrimaryColor,
-                  ),
-                ),
-                label: '',
-              ),
               const BottomNavigationBarItem(
                 icon: Icon(
                   Icons.person,

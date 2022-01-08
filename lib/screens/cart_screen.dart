@@ -18,7 +18,7 @@ class CartScreen extends StatelessWidget {
           children: [
             CustomAppBar(
               title: Text(
-                'Jakarta, INA',
+                'Cart',
                 style: Theme.of(context).textTheme.headline6!.copyWith(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
@@ -26,18 +26,29 @@ class CartScreen extends StatelessWidget {
               ),
             ),
             Expanded(
-                child: ListView.builder(
-                    itemCount: cart.items.length,
-                    itemBuilder: (context, index) => CartItem(
-                          id: cart.items.values.toList()[index].id,
-                          title: cart.items.values.toList()[index].title,
-                          imageUrl: cart.items.values.toList()[index].imageUrl,
-                          subCategory:
-                              cart.items.values.toList()[index].subCategory,
-                          quantity: cart.items.values.toList()[index].quantity,
-                          price: cart.items.values.toList()[index].price,
-                          productId: cart.items.keys.toList()[index],
-                        ))),
+                child: cart.items.isEmpty
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset('assets/images/empty-cart.png'),
+                          Text('NO ITEMS IN CART',
+                              style: Theme.of(context).textTheme.bodyText1)
+                        ],
+                      )
+                    : ListView.builder(
+                        itemCount: cart.items.length,
+                        itemBuilder: (context, index) => CartItem(
+                              id: cart.items.values.toList()[index].id,
+                              title: cart.items.values.toList()[index].title,
+                              imageUrl:
+                                  cart.items.values.toList()[index].imageUrl,
+                              subCategory:
+                                  cart.items.values.toList()[index].subCategory,
+                              quantity:
+                                  cart.items.values.toList()[index].quantity,
+                              price: cart.items.values.toList()[index].price,
+                              productId: cart.items.keys.toList()[index],
+                            ))),
             const SizedBox(
               height: kDefaultPadding * 2,
             ),
