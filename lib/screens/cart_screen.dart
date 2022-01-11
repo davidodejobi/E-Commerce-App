@@ -76,7 +76,7 @@ class CartScreen extends StatelessWidget {
                           ),
                           FittedBox(
                             child: Text(
-                              '\$${cart.totalAmount}',
+                              '\$${cart.totalAmount.toStringAsFixed(2)}',
                               style: Theme.of(context)
                                   .textTheme
                                   .headline1!
@@ -96,6 +96,11 @@ class CartScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: InkWell(
+                      onTap: () {
+                        Provider.of<Orders>(context, listen: false).addOrder(
+                            cart.items.values.toList(), cart.totalAmount);
+                        cart.clear();
+                      },
                       borderRadius: BorderRadius.circular(20),
                       child: Container(
                         height: 60,
@@ -108,7 +113,7 @@ class CartScreen extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            'Buy Now',
+                            'Order Now',
                             style:
                                 Theme.of(context).textTheme.bodyText1!.copyWith(
                                       fontWeight: FontWeight.bold,

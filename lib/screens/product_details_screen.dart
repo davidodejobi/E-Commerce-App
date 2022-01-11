@@ -167,7 +167,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           ),
                           child: Center(
                             child: Text(
-                              'Buy Now',
+                              'Order Now',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1!

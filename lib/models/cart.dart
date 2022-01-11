@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import '/models/models.dart';
 
-class CartItem with ChangeNotifier {
+class BaseCartItem with ChangeNotifier {
   final String? id;
   final String? title;
   final String? imageUrl;
@@ -10,7 +10,7 @@ class CartItem with ChangeNotifier {
   final int? quantity;
   final double? price;
 
-  CartItem({
+  BaseCartItem({
     required this.id,
     required this.title,
     required this.imageUrl,
@@ -21,9 +21,9 @@ class CartItem with ChangeNotifier {
 }
 
 class Cart with ChangeNotifier {
-  Map<String, CartItem> _items = {};
+  Map<String, BaseCartItem> _items = {};
 
-  Map<String, CartItem> get items {
+  Map<String, BaseCartItem> get items {
     return {..._items};
   }
 
@@ -50,7 +50,7 @@ class Cart with ChangeNotifier {
     if (_items.containsKey(productId)) {
       _items.update(
         productId!,
-        (existingCartItem) => CartItem(
+        (existingCartItem) => BaseCartItem(
           id: existingCartItem.id,
           title: existingCartItem.title,
           imageUrl: existingCartItem.imageUrl,
@@ -62,7 +62,7 @@ class Cart with ChangeNotifier {
     } else {
       _items.putIfAbsent(
         productId!,
-        () => CartItem(
+        () => BaseCartItem(
           id: DateTime.now().toString(),
           title: title,
           imageUrl: imageUrl,
@@ -87,7 +87,7 @@ class Cart with ChangeNotifier {
     if (_items[productId]!.quantity! > 1) {
       _items.update(
         productId,
-        (existingCartItem) => CartItem(
+        (existingCartItem) => BaseCartItem(
           id: existingCartItem.id,
           title: existingCartItem.title,
           imageUrl: existingCartItem.imageUrl,
@@ -106,7 +106,7 @@ class Cart with ChangeNotifier {
     if (_items[productId]!.quantity! > 0) {
       _items.update(
         productId,
-        (existingCartItem) => CartItem(
+        (existingCartItem) => BaseCartItem(
           id: existingCartItem.id,
           title: existingCartItem.title,
           imageUrl: existingCartItem.imageUrl,

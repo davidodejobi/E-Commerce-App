@@ -69,7 +69,7 @@ class HomePage extends StatelessWidget {
                     const ProductList(),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
