@@ -1,7 +1,7 @@
-import 'package:e_commerce_app/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '/constant.dart';
 import '/models/models.dart';
 import '/widgets/widgets.dart';
 
@@ -82,7 +82,7 @@ class CartScreen extends StatelessWidget {
                                   .headline1!
                                   .copyWith(
                                     color: Colors.black,
-                                    fontSize: 25,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.w700,
                                   ),
                             ),
