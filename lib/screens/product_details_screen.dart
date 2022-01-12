@@ -154,27 +154,42 @@ class ProductDetailsScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Container(
-                          height: 60,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: kDefaultPadding,
-                          ),
-                          decoration: BoxDecoration(
-                            gradient: kDefaultGradient,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Order Now',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1!
-                                  .copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
+                      child: Consumer<Manager>(
+                        builder: (_, tabManager, __) => InkWell(
+                          onTap: () {
+                            cart.addItem(
+                                productId: product!.id,
+                                price: product!.price,
+                                title: product!.title,
+                                imageUrl: product!.imageUrl,
+                                subCategory: product!.subCategory,
+                                isBuying: product!.isBuying);
+
+                            tabManager.gotoCartPage();
+
+                            Navigator.of(context).pop();
+                          },
+                          borderRadius: BorderRadius.circular(20),
+                          child: Container(
+                            height: 60,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: kDefaultPadding,
+                            ),
+                            decoration: BoxDecoration(
+                              gradient: kDefaultGradient,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Order Now',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                              ),
                             ),
                           ),
                         ),
@@ -193,6 +208,23 @@ class ProductDetailsScreen extends StatelessWidget {
                             imageUrl: product!.imageUrl,
                             subCategory: product!.subCategory,
                             isBuying: product!.isBuying);
+                        //snackbar is used to display info below the screen
+                        //after a certain action ot button is pressed.
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        // the code above overides the timer attached to the current
+                        // snackbar and hides it immediately a button is pressed to
+                        // avoid the user from having to wait for the timer to finish
+                        final snackBar = SnackBar(
+                          content: const Text('Product added to your cart'),
+                          duration: const Duration(seconds: 1),
+                          action: SnackBarAction(
+                            label: 'Undo',
+                            onPressed: () {
+                              cart.removeSingleItem(product!.id!);
+                            },
+                          ),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       },
                       borderRadius: BorderRadius.circular(60),
                       child: Container(
