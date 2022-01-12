@@ -167,7 +167,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           ),
                           child: Center(
                             child: Text(
-                              'Buy Now',
+                              'Order Now',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1!
@@ -187,10 +187,12 @@ class ProductDetailsScreen extends StatelessWidget {
                       hoverColor: Colors.grey[700],
                       onTap: () {
                         cart.addItem(
-                          productId: product!.id,
-                          price: product!.price,
-                          title: product!.title,
-                        );
+                            productId: product!.id,
+                            price: product!.price,
+                            title: product!.title,
+                            imageUrl: product!.imageUrl,
+                            subCategory: product!.subCategory,
+                            isBuying: product!.isBuying);
                       },
                       borderRadius: BorderRadius.circular(60),
                       child: Container(

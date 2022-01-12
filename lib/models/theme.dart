@@ -65,6 +65,8 @@ class AppTheme {
 
   static ThemeData light() {
     return ThemeData(
+      unselectedWidgetColor: Colors.grey[400],
+      toggleableActiveColor: Colors.pink[200],
       primaryColor: Colors.pink[200],
       colorScheme: ColorScheme.light(
         primary: Colors.white,
@@ -88,11 +90,13 @@ class AppTheme {
         backgroundColor: Colors.white,
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        selectedItemColor: Colors.pink[300],
-        unselectedItemColor: Colors.grey[300],
+        selectedItemColor: Colors.pink[200],
+        unselectedItemColor: Colors.grey[400],
         selectedIconTheme: IconThemeData(
-          color: Colors.pink[300],
+          color: Colors.pink[200],
         ),
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         elevation: 50,
         backgroundColor: Colors.white,
       ),

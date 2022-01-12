@@ -6,10 +6,7 @@ import '../constant.dart';
 
 class CustomAppBar extends StatelessWidget {
   final Widget? title;
-  const CustomAppBar({
-    this.title,
-    Key? key,
-  }) : super(key: key);
+  const CustomAppBar({Key? key, this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +17,9 @@ class CustomAppBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           RoundedIconButton(
-            onPressed: () {},
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
             icon: Icon(
               Icons.menu,
               color: Colors.pink[200],

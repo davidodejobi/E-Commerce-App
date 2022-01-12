@@ -16,6 +16,7 @@ class Product with ChangeNotifier {
   final String? imageUrl;
   final SubCategory? subCategory;
   bool? isFavorite;
+  bool? isBuying;
 
   Product({
     this.id,
@@ -26,7 +27,13 @@ class Product with ChangeNotifier {
     this.imageUrl,
     this.subCategory,
     this.isFavorite = false,
+    this.isBuying = false,
   });
+
+  void toggleSwitch() {
+    isBuying = !isBuying!;
+    notifyListeners();
+  }
 
   void toggleFavoriteStatus() {
     isFavorite = !isFavorite!;

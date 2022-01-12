@@ -9,3 +9,8 @@ export 'rounded_icon_button.dart';
 export 'product_list_item.dart';
 export 'badge.dart';
 export 'bottom_nav_bar.dart';
+export 'cart_item.dart';
+export 'drawer/drawer_button.dart';
+export 'drawer/drawer_header.dart';
+export 'drawer/my_drawer.dart';
+export 'single_order_item.dart';

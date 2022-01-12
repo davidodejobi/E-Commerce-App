@@ -13,7 +13,7 @@ class CategoriesButton extends StatelessWidget {
 
     final mainCategory = category.mainCategory;
 
-    return Container(
+    return SizedBox(
       height: 30,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
