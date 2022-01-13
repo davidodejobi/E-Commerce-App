@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/screens/user_product_screen.dart';
 import 'package:flutter/material.dart';
 
 import '/screens/orders_screen.dart';
@@ -52,6 +53,19 @@ class MyDrawer extends StatelessWidget {
               },
               buttonIcon: Icons.payment,
               buttonText: 'Orders',
+              size: size,
+            ),
+            DrawerButton(
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const UserProductScreen(),
+                  ),
+                );
+              },
+              buttonIcon: Icons.edit_outlined,
+              buttonText: 'Manage Products',
               size: size,
             ),
           ],
