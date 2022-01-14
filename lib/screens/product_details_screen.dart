@@ -158,12 +158,12 @@ class ProductDetailsScreen extends StatelessWidget {
                         builder: (_, tabManager, __) => InkWell(
                           onTap: () {
                             cart.addItem(
-                                productId: product!.id,
-                                price: product!.price,
-                                title: product!.title,
-                                imageUrl: product!.imageUrl,
-                                subCategory: product!.subCategory,
-                                isBuying: product!.isBuying);
+                              productId: product!.id,
+                              price: product!.price,
+                              title: product!.title,
+                              imageUrl: product!.imageUrl,
+                              subCategory: product!.subCategory,
+                            );
 
                             tabManager.gotoCartPage();
 
@@ -202,12 +202,12 @@ class ProductDetailsScreen extends StatelessWidget {
                       hoverColor: Colors.grey[700],
                       onTap: () {
                         cart.addItem(
-                            productId: product!.id,
-                            price: product!.price,
-                            title: product!.title,
-                            imageUrl: product!.imageUrl,
-                            subCategory: product!.subCategory,
-                            isBuying: product!.isBuying);
+                          productId: product!.id,
+                          price: product!.price,
+                          title: product!.title,
+                          imageUrl: product!.imageUrl,
+                          subCategory: product!.subCategory,
+                        );
                         //snackbar is used to display info below the screen
                         //after a certain action ot button is pressed.
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
