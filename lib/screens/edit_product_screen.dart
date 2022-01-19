@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '/widgets/widgets.dart';
 import '../constant.dart';
+import '../models/models.dart';
 
 class EditProductScreen extends StatefulWidget {
   const EditProductScreen({Key? key}) : super(key: key);
@@ -13,6 +14,14 @@ class EditProductScreen extends StatefulWidget {
 class _EditProductScreenState extends State<EditProductScreen> {
   final _imageUrlController = TextEditingController();
   final _imageFocusNode = FocusNode();
+  final _form = GlobalKey<FormState>();
+  var _editedProduct = Product(
+    id: DateTime.now().toString(),
+    title: '',
+    price: 0,
+    description: '',
+    imageUrl: '',
+  );
 
   @override
   void dispose() {
@@ -34,6 +43,18 @@ class _EditProductScreenState extends State<EditProductScreen> {
     }
   }
 
+  void _saveForm() {
+    final isValid = _form.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+    _form.currentState!.save();
+    print(_editedProduct.title);
+    print(_editedProduct.description);
+    print(_editedProduct.price);
+    print(_editedProduct.imageUrl);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,6 +70,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 leading: SizedBox(),
               ),
               Form(
+                key: _form,
                 child: Expanded(
                   child: ListView(
                     children: [
@@ -82,9 +104,18 @@ class _EditProductScreenState extends State<EditProductScreen> {
                             onFieldSubmitted: (_) {},
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'Please provide a title.';
+                                return 'Please enter a title';
                               }
                               return null;
+                            },
+                            onSaved: (value) {
+                              _editedProduct = Product(
+                                id: _editedProduct.id,
+                                title: value,
+                                description: _editedProduct.description,
+                                price: _editedProduct.price,
+                                imageUrl: _editedProduct.imageUrl,
+                              );
                             },
                           ),
                         ],
@@ -120,9 +151,24 @@ class _EditProductScreenState extends State<EditProductScreen> {
                             onFieldSubmitted: (_) {},
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'Please provide a title.';
+                                return 'Please provide a price.';
+                              }
+                              if (double.tryParse(value) == null) {
+                                return 'Please enter a valid number.';
+                              }
+                              if (double.parse(value) <= 0) {
+                                return 'Please enter a number greater than zero.';
                               }
                               return null;
+                            },
+                            onSaved: (value) {
+                              _editedProduct = Product(
+                                id: _editedProduct.id,
+                                title: _editedProduct.title,
+                                description: _editedProduct.description,
+                                price: double.parse(value!),
+                                imageUrl: _editedProduct.imageUrl,
+                              );
                             },
                           ),
                         ],
@@ -159,9 +205,18 @@ class _EditProductScreenState extends State<EditProductScreen> {
                             onFieldSubmitted: (_) {},
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'Please provide a title.';
+                                return 'Please provide a description.';
                               }
                               return null;
+                            },
+                            onSaved: (value) {
+                              _editedProduct = Product(
+                                id: _editedProduct.id,
+                                title: _editedProduct.title,
+                                description: value,
+                                price: _editedProduct.price,
+                                imageUrl: _editedProduct.imageUrl,
+                              );
                             },
                           ),
                         ],
@@ -228,13 +283,32 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                   keyboardType: TextInputType.url,
                                   textInputAction: TextInputAction.next,
                                   onFieldSubmitted: (_) {
+                                    _saveForm();
                                     setState(() {});
                                   },
                                   validator: (value) {
                                     if (value!.isEmpty) {
-                                      return 'Please provide a title.';
+                                      return 'Please provide a image url.';
+                                    }
+                                    if (!value.startsWith('http') &&
+                                        !value.startsWith('https')) {
+                                      return 'Please provide a valid image url.';
+                                    }
+                                    if (!value.endsWith('.png') &&
+                                        !value.endsWith('.jpg') &&
+                                        !value.endsWith('.jpeg')) {
+                                      return 'Please provide a valid image url.';
                                     }
                                     return null;
+                                  },
+                                  onSaved: (value) {
+                                    _editedProduct = Product(
+                                      id: _editedProduct.id,
+                                      title: _editedProduct.title,
+                                      description: _editedProduct.description,
+                                      price: _editedProduct.price,
+                                      imageUrl: value,
+                                    );
                                   },
                                 ),
                               ),
@@ -242,10 +316,37 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           ),
                         ],
                       ),
+                      const SizedBox(height: kDefaultPadding),
                     ],
                   ),
                 ),
-              )
+              ),
+              InkWell(
+                onTap: () {
+                  _saveForm();
+                },
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  height: 60,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: kDefaultPadding,
+                  ),
+                  decoration: BoxDecoration(
+                    gradient: kDefaultGradient,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Done',
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: kDefaultPadding),
             ],
           ),
         ),
