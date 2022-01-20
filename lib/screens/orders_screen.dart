@@ -17,12 +17,14 @@ class OrdersScreen extends StatelessWidget {
         body: SafeArea(
           child: Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(
+              Padding(
+                padding: const EdgeInsets.symmetric(
                   horizontal: kDefaultPadding,
                 ),
                 child: CustomAppBar(
-                  title: Text('Orders'),
+                  onLeadingTap: () {},
+                  leading: const ProfileImage(),
+                  title: const Text('Orders'),
                 ),
               ),
               Expanded(

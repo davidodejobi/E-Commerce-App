@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '/widgets/widgets.dart';
 import '../constant.dart';
@@ -23,6 +24,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
     imageUrl: '',
   );
 
+  SubCategory? _selectedCategory;
+
   @override
   void dispose() {
     _imageUrlController.dispose();
@@ -39,6 +42,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
   void _updateImageUrl() {
     if (!_imageFocusNode.hasFocus) {
+      if ((!_imageUrlController.text.startsWith('http') &&
+              !_imageUrlController.text.startsWith('https')) ||
+          (!_imageUrlController.text.endsWith('.png') &&
+              !_imageUrlController.text.endsWith('.jpg') &&
+              !_imageUrlController.text.endsWith('.jpeg'))) {
+        return;
+      }
       setState(() {});
     }
   }
@@ -49,10 +59,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
       return;
     }
     _form.currentState!.save();
-    print(_editedProduct.title);
-    print(_editedProduct.description);
-    print(_editedProduct.price);
-    print(_editedProduct.imageUrl);
+    Provider.of<Products>(context, listen: false)
+        .addProduct(_editedProduct, _selectedCategory!);
+
+    Navigator.of(context).pop();
   }
 
   @override
@@ -65,9 +75,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
           ),
           child: Column(
             children: [
-              const PopCustomAppBar(
-                title: Text('Your Products'),
-                leading: SizedBox(),
+              PopCustomAppBar(
+                icon: Icons.arrow_back_ios_rounded,
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                title: const Text('Your Products'),
+                leading: const SizedBox(),
               ),
               Form(
                 key: _form,
@@ -101,7 +115,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
                             cursorColor: Colors.black,
                             textInputAction: TextInputAction.next,
                             keyboardType: TextInputType.text,
-                            onFieldSubmitted: (_) {},
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter a title';
@@ -148,7 +161,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
                             cursorColor: Colors.black,
                             keyboardType: TextInputType.number,
                             textInputAction: TextInputAction.next,
-                            onFieldSubmitted: (_) {},
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please provide a price.';
@@ -202,11 +214,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
                             maxLines: 3,
                             keyboardType: TextInputType.multiline,
                             textInputAction: TextInputAction.next,
-                            onFieldSubmitted: (_) {},
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please provide a description.';
                               }
+                              if (value.length < 20) {
+                                return 'Should be at least 20 characters long.';
+                              }
+
                               return null;
                             },
                             onSaved: (value) {
@@ -219,6 +234,61 @@ class _EditProductScreenState extends State<EditProductScreen> {
                               );
                             },
                           ),
+                        ],
+                      ),
+                      const SizedBox(height: kDefaultPadding),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Product Category',
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                          const SizedBox(height: kDefaultPadding / 2),
+                          Wrap(
+                            spacing: 10.0,
+                            children: [
+                              ChoiceChip(
+                                selectedColor: kPrimaryColor,
+                                selected: _selectedCategory == SubCategory.men,
+                                label: const Text(
+                                  'for men',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                onSelected: (selected) {
+                                  setState(() =>
+                                      _selectedCategory = SubCategory.men);
+                                },
+                              ),
+                              ChoiceChip(
+                                selectedColor: kPrimaryColor,
+                                selected:
+                                    _selectedCategory == SubCategory.women,
+                                label: const Text(
+                                  'for women',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                onSelected: (selected) {
+                                  setState(() =>
+                                      _selectedCategory = SubCategory.women);
+                                },
+                              ),
+                              ChoiceChip(
+                                autofocus: true,
+                                selectedColor: kPrimaryColor,
+                                selected:
+                                    _selectedCategory == SubCategory.children,
+                                label: const Text(
+                                  'for children',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                onSelected: (selected) {
+                                  setState(() =>
+                                      _selectedCategory = SubCategory.children);
+                                },
+                              ),
+                            ],
+                          )
                         ],
                       ),
                       const SizedBox(height: kDefaultPadding),

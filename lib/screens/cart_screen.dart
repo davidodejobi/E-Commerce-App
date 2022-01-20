@@ -17,6 +17,8 @@ class CartScreen extends StatelessWidget {
         child: Column(
           children: [
             CustomAppBar(
+              leading: const ProfileImage(),
+              onLeadingTap: () {},
               title: Text(
                 'Cart',
                 style: Theme.of(context).textTheme.headline6!.copyWith(

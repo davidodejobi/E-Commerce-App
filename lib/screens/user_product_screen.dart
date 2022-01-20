@@ -24,18 +24,19 @@ class UserProductScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
-              PopCustomAppBar(
-                title: const Text('Your Products'),
-                leading: InkWell(
-                    child: RoundedIconButton(
-                  icon: const Icon(Icons.add),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => const EditProductScreen()));
-                  },
-                )),
+              CustomAppBar(
+                leading: const Icon(
+                  Icons.add,
+                ),
+                onLeadingTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const EditProductScreen(),
+                    ),
+                  );
+                },
+                title: const Text('Orders'),
               ),
               Expanded(
                 child: ListView.builder(

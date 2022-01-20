@@ -5,7 +5,15 @@ import '/widgets/widgets.dart';
 class PopCustomAppBar extends StatelessWidget {
   final Widget? title;
   final Widget? leading;
-  const PopCustomAppBar({Key? key, this.title, this.leading}) : super(key: key);
+  final VoidCallback? onPressed;
+  final IconData? icon;
+  const PopCustomAppBar({
+    Key? key,
+    this.title,
+    this.leading,
+    this.onPressed,
+    this.icon,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +24,9 @@ class PopCustomAppBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           RoundedIconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
+            onPressed: onPressed,
             icon: Icon(
-              Icons.arrow_back_ios_rounded,
+              icon,
               color: Colors.pink[200],
               size: 20,
             ),
