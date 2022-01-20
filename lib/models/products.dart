@@ -151,6 +151,10 @@ class Products with ChangeNotifier {
     ),
   ];
 
+  Product findById(String id) {
+    return _items.firstWhere((prod) => prod.id == id);
+  }
+
   List<Product> get items => List.unmodifiable(_items);
 
   List<Product> get favoriteItems {

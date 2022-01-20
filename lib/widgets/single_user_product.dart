@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_commerce_app/screens/edit_product_screen.dart';
 import 'package:flutter/material.dart';
 
 import '/models/models.dart';
@@ -51,7 +52,18 @@ class SingleUserProduct extends StatelessWidget {
           ),
           const Spacer(),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return EditProductScreen(
+                      id: product!.id,
+                    );
+                  },
+                ),
+              );
+            },
             icon: const Icon(Icons.edit_outlined),
           ),
           IconButton(

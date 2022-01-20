@@ -6,7 +6,12 @@ import '../constant.dart';
 import '../models/models.dart';
 
 class EditProductScreen extends StatefulWidget {
-  const EditProductScreen({Key? key}) : super(key: key);
+  final String? id;
+
+  const EditProductScreen({
+    this.id,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<EditProductScreen> createState() => _EditProductScreenState();
@@ -17,12 +22,19 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final _imageFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
   var _editedProduct = Product(
-    id: DateTime.now().toString(),
+    id: null,
     title: '',
     price: 0,
     description: '',
     imageUrl: '',
   );
+
+  var _initValues = {
+    'title': '',
+    'description': '',
+    'price': '',
+    'imageUrl': '',
+  };
 
   SubCategory? _selectedCategory;
 
@@ -32,8 +44,37 @@ class _EditProductScreenState extends State<EditProductScreen> {
     super.dispose();
   }
 
+  /// this method is called before build is excecuted like initState but it
+  /// it checks if the id is null or not
+  /// if it is null then it will set the state of the product to the edited product
+  /// if it is not null then it will set the state of the product to the product with the id
+  /// it also sets the selected category to the category of the product
+  /// it also sets the image url to the image url of the product
+
+  // @override
+  // void didChangeDependencies() {
+  //   if (widget.id != null) {
+  //     _editedProduct =
+  //         Provider.of<Products>(context, listen: false).findById(widget.id!);
+  //     _imageUrlController.text = _editedProduct.imageUrl!;
+  //     _selectedCategory = _editedProduct.subCategory;
+  //   }
+  //   super.didChangeDependencies();
+  // }
+
   @override
   void initState() {
+    if (widget.id != null) {
+      _editedProduct =
+          Provider.of<Products>(context, listen: false).findById(widget.id!);
+      _initValues = {
+        'title': _editedProduct.title!,
+        'description': _editedProduct.description!,
+        'price': _editedProduct.price.toString(),
+      };
+      _imageUrlController.text = _editedProduct.imageUrl!;
+      _selectedCategory = _editedProduct.subCategory;
+    }
     _imageFocusNode.addListener(() {
       _updateImageUrl();
     });
@@ -59,8 +100,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
       return;
     }
     _form.currentState!.save();
-    Provider.of<Products>(context, listen: false)
-        .addProduct(_editedProduct, _selectedCategory!);
+    if (_editedProduct.id != null) {
+      Provider.of<Products>(context, listen: false)
+          .updateProduct(_editedProduct.id!, _editedProduct);
+    } else {
+      Provider.of<Products>(context, listen: false)
+          .addProduct(_editedProduct, _selectedCategory!);
+    }
 
     Navigator.of(context).pop();
   }
@@ -81,7 +127,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   Navigator.pop(context);
                 },
                 title: const Text('Your Products'),
-                leading: const SizedBox(),
+                leading: const SizedBox(
+                  height: 30,
+                  width: 30,
+                ),
               ),
               Form(
                 key: _form,
@@ -97,6 +146,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           ),
                           const SizedBox(height: kDefaultPadding / 2),
                           TextFormField(
+                            initialValue: _initValues['title'],
                             decoration: InputDecoration(
                               hintText: 'Enter Product Title',
                               focusedBorder: OutlineInputBorder(
@@ -128,6 +178,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                 description: _editedProduct.description,
                                 price: _editedProduct.price,
                                 imageUrl: _editedProduct.imageUrl,
+                                isFavorite: _editedProduct.isFavorite,
                               );
                             },
                           ),
@@ -143,6 +194,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           ),
                           const SizedBox(height: kDefaultPadding / 2),
                           TextFormField(
+                            initialValue: _initValues['price'],
                             decoration: InputDecoration(
                               hintText: 'Enter Product Price',
                               focusedBorder: OutlineInputBorder(
@@ -180,6 +232,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                 description: _editedProduct.description,
                                 price: double.parse(value!),
                                 imageUrl: _editedProduct.imageUrl,
+                                isFavorite: _editedProduct.isFavorite,
                               );
                             },
                           ),
@@ -195,6 +248,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           ),
                           const SizedBox(height: kDefaultPadding / 2),
                           TextFormField(
+                            initialValue: _initValues['description'],
                             decoration: InputDecoration(
                               hintText: 'Enter Product Description',
                               focusedBorder: OutlineInputBorder(
@@ -231,6 +285,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                 description: value,
                                 price: _editedProduct.price,
                                 imageUrl: _editedProduct.imageUrl,
+                                isFavorite: _editedProduct.isFavorite,
                               );
                             },
                           ),
@@ -378,6 +433,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                       description: _editedProduct.description,
                                       price: _editedProduct.price,
                                       imageUrl: value,
+                                      isFavorite: _editedProduct.isFavorite,
                                     );
                                   },
                                 ),
