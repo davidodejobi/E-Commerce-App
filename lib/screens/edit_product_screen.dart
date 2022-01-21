@@ -7,9 +7,11 @@ import '../models/models.dart';
 
 class EditProductScreen extends StatefulWidget {
   final String? id;
+  final bool? isFavorite;
 
   const EditProductScreen({
     this.id,
+    this.isFavorite,
     Key? key,
   }) : super(key: key);
 
@@ -30,10 +32,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
   );
 
   var _initValues = {
+    'id': '',
     'title': '',
     'description': '',
     'price': '',
     'imageUrl': '',
+    'categories': Category,
   };
 
   SubCategory? _selectedCategory;
@@ -68,9 +72,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
       _editedProduct =
           Provider.of<Products>(context, listen: false).findById(widget.id!);
       _initValues = {
+        'id': _editedProduct.id!,
         'title': _editedProduct.title!,
         'description': _editedProduct.description!,
         'price': _editedProduct.price.toString(),
+        'imageUrl': '',
       };
       _imageUrlController.text = _editedProduct.imageUrl!;
       _selectedCategory = _editedProduct.subCategory;
@@ -101,13 +107,21 @@ class _EditProductScreenState extends State<EditProductScreen> {
     }
     _form.currentState!.save();
     if (_editedProduct.id != null) {
-      Provider.of<Products>(context, listen: false)
-          .updateProduct(_editedProduct.id!, _editedProduct);
+      Provider.of<Products>(context, listen: false).updateProduct(
+          _editedProduct.id!,
+          _editedProduct,
+          _selectedCategory!,
+          widget.isFavorite!);
     } else {
       Provider.of<Products>(context, listen: false)
           .addProduct(_editedProduct, _selectedCategory!);
     }
-
+    print(_editedProduct.id);
+    print(_editedProduct.title);
+    print(_editedProduct.price);
+    print(_editedProduct.imageUrl);
+    print(_editedProduct.description);
+    print('this the current category $_selectedCategory');
     Navigator.of(context).pop();
   }
 
@@ -146,7 +160,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           ),
                           const SizedBox(height: kDefaultPadding / 2),
                           TextFormField(
-                            initialValue: _initValues['title'],
+                            initialValue: _initValues['title'] as String,
                             decoration: InputDecoration(
                               hintText: 'Enter Product Title',
                               focusedBorder: OutlineInputBorder(
@@ -194,7 +208,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           ),
                           const SizedBox(height: kDefaultPadding / 2),
                           TextFormField(
-                            initialValue: _initValues['price'],
+                            initialValue: _initValues['price'] as String,
                             decoration: InputDecoration(
                               hintText: 'Enter Product Price',
                               focusedBorder: OutlineInputBorder(
@@ -248,7 +262,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           ),
                           const SizedBox(height: kDefaultPadding / 2),
                           TextFormField(
-                            initialValue: _initValues['description'],
+                            initialValue: _initValues['description'] as String,
                             decoration: InputDecoration(
                               hintText: 'Enter Product Description',
                               focusedBorder: OutlineInputBorder(

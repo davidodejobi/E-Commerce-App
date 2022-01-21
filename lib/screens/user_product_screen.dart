@@ -42,7 +42,12 @@ class UserProductScreen extends StatelessWidget {
                 child: ListView.builder(
                   itemCount: product.items.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return SingleUserProduct(product: product.items[index]);
+                    return SingleUserProduct(
+                      onPressed: () {
+                        product.deleteProduct(product.items[index].id!);
+                      },
+                      product: product.items[index],
+                    );
                   },
                 ),
               ),

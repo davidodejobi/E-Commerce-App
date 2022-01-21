@@ -7,9 +7,11 @@ import '../constant.dart';
 
 class SingleUserProduct extends StatelessWidget {
   final Product? product;
+  final VoidCallback? onPressed;
   const SingleUserProduct({
     Key? key,
     this.product,
+    this.onPressed,
   }) : super(key: key);
 
   @override
@@ -58,6 +60,7 @@ class SingleUserProduct extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) {
                     return EditProductScreen(
+                      isFavorite: product!.isFavorite,
                       id: product!.id,
                     );
                   },
@@ -67,7 +70,7 @@ class SingleUserProduct extends StatelessWidget {
             icon: const Icon(Icons.edit_outlined),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: onPressed,
             icon: const Icon(Icons.delete),
           ),
         ],
