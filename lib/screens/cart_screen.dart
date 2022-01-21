@@ -17,6 +17,8 @@ class CartScreen extends StatelessWidget {
         child: Column(
           children: [
             CustomAppBar(
+              leading: const ProfileImage(),
+              onLeadingTap: () {},
               title: Text(
                 'Cart',
                 style: Theme.of(context).textTheme.headline6!.copyWith(
@@ -95,30 +97,54 @@ class CartScreen extends StatelessWidget {
                     width: 5,
                   ),
                   Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        Provider.of<Orders>(context, listen: false).addOrder(
-                            cart.items.values.toList(), cart.totalAmount);
-                        cart.clear();
-                      },
-                      borderRadius: BorderRadius.circular(20),
-                      child: Container(
-                        height: 60,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: kDefaultPadding,
-                        ),
-                        decoration: BoxDecoration(
-                          gradient: kDefaultGradient,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Order Now',
-                            style:
-                                Theme.of(context).textTheme.bodyText1!.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
+                    child: Consumer<Manager>(
+                      builder: (_, tabManager, __) => InkWell(
+                        onTap: cart.items.isNotEmpty
+                            ? () {
+                                Provider.of<Orders>(context, listen: false)
+                                    .addOrder(cart.items.values.toList(),
+                                        cart.totalAmount);
+                                cart.clear();
+                              }
+                            : () {
+                                ScaffoldMessenger.of(context)
+                                    .hideCurrentSnackBar();
+
+                                final snackBar = SnackBar(
+                                  content: const Text(
+                                      'There are no items in your cart, kindly add :('),
+                                  duration: const Duration(seconds: 2),
+                                  action: SnackBarAction(
+                                    label: 'HomePage',
+                                    onPressed: () {
+                                      tabManager.gotoHomePage();
+                                    },
+                                  ),
+                                );
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              },
+                        borderRadius: BorderRadius.circular(20),
+                        child: Container(
+                          height: 60,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: kDefaultPadding,
+                          ),
+                          decoration: BoxDecoration(
+                            gradient: kDefaultGradient,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Order Now',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                            ),
                           ),
                         ),
                       ),

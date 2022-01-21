@@ -18,6 +18,8 @@ class HomePage extends StatelessWidget {
           child: Column(
             children: [
               CustomAppBar(
+                leading: const ProfileImage(),
+                onLeadingTap: () {},
                 title: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

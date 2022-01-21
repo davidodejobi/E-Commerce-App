@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 
 import '/widgets/widgets.dart';
 
-class CustomAppBar extends StatelessWidget {
+class PopCustomAppBar extends StatelessWidget {
   final Widget? title;
   final Widget? leading;
-  final VoidCallback? onLeadingTap;
-  const CustomAppBar({
+  final VoidCallback? onPressed;
+  final IconData? icon;
+  const PopCustomAppBar({
     Key? key,
     this.title,
     this.leading,
-    this.onLeadingTap,
+    this.onPressed,
+    this.icon,
   }) : super(key: key);
 
   @override
@@ -22,20 +24,15 @@ class CustomAppBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           RoundedIconButton(
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
+            onPressed: onPressed,
             icon: Icon(
-              Icons.menu,
+              icon,
               color: Colors.pink[200],
               size: 20,
             ),
           ),
           title!,
-          RoundedIconButton(
-            onPressed: onLeadingTap,
-            icon: leading,
-          ),
+          leading!,
         ],
       ),
     );

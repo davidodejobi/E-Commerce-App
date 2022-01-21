@@ -5,12 +5,14 @@ class OrderItem {
   final String? id;
   final double? amount;
   final List<BaseCartItem>? products;
+  final Product? product;
   final DateTime? dateTime;
 
   OrderItem({
     this.id,
     this.amount,
     this.products,
+    this.product,
     this.dateTime,
   });
 }

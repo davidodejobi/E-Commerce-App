@@ -7,4 +7,14 @@ class Manager with ChangeNotifier {
     currentIndex = index;
     notifyListeners();
   }
+
+  void gotoHomePage() {
+    currentIndex = 0;
+    notifyListeners();
+  }
+
+  void gotoCartPage() {
+    currentIndex = 2;
+    notifyListeners();
+  }
 }

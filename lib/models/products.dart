@@ -151,9 +151,53 @@ class Products with ChangeNotifier {
     ),
   ];
 
+  Product findById(String id) {
+    return _items.firstWhere((prod) => prod.id == id);
+  }
+
   List<Product> get items => List.unmodifiable(_items);
 
   List<Product> get favoriteItems {
     return _items.where((prodItem) => prodItem.isFavorite!).toList();
+  }
+
+  void addProduct(Product product, SubCategory subCategory) {
+    final newProduct = Product(
+      id: DateTime.now().toString(),
+      title: product.title,
+      description: product.description,
+      subCategory: subCategory,
+      categories: [ProductCategory.all],
+      price: product.price,
+      imageUrl: product.imageUrl,
+    );
+    _items.add(newProduct);
+    // _items.insert(0, newProduct);  // at the start if the line.
+    notifyListeners();
+  }
+
+  void updateProduct(
+      String id, Product newProduct, SubCategory subCategory, bool isFavorite) {
+    final prodIndex = _items.indexWhere((prod) => prod.id == id);
+    if (prodIndex >= 0) {
+      _items[prodIndex] = Product(
+        id: DateTime.now().toString(),
+        title: newProduct.title,
+        description: newProduct.description,
+        subCategory: subCategory,
+        categories: [ProductCategory.all],
+        price: newProduct.price,
+        imageUrl: newProduct.imageUrl,
+        isFavorite: isFavorite,
+      );
+      notifyListeners();
+    } else {
+      print('...');
+    }
+  }
+
+  void deleteProduct(String id) {
+    _items.removeWhere((prod) => prod.id == id);
+    notifyListeners();
   }
 }
