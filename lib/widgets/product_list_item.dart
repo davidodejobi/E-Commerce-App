@@ -40,7 +40,7 @@ class _ProductListItemState extends State<ProductListItem> {
                   imageUrl: product.imageUrl!,
                   fit: BoxFit.cover,
                   placeholder: (context, url) =>
-                      const CircularProgressIndicator(),
+                      const Center(child: CircularProgressIndicator()),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                   fadeOutDuration: const Duration(seconds: 1),
                   fadeInDuration: const Duration(seconds: 3),

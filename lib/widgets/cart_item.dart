@@ -144,9 +144,7 @@ class _CartItemState extends State<CartItem> {
                             : TextDecoration.lineThrough,
                       ),
                 ),
-                const SizedBox(
-                  height: kDefaultPadding / 4,
-                ),
+                const Spacer(),
                 Text(
                   '\$${widget.price}',
                   style: Theme.of(context).textTheme.headline1!.copyWith(

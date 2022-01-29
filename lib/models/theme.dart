@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -69,7 +70,7 @@ class AppTheme {
       toggleableActiveColor: Colors.pink[200],
       primaryColor: Colors.pink[200],
       colorScheme: ColorScheme.light(
-        primary: Colors.white,
+        primary: kPrimaryColor!,
         secondary: Colors.pink.shade200,
       ),
       brightness: Brightness.light,

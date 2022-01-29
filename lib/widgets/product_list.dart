@@ -5,14 +5,27 @@ import '/models/models.dart';
 import '/widgets/widgets.dart';
 import '../constant.dart';
 
-class ProductList extends StatelessWidget {
+class ProductList extends StatefulWidget {
   const ProductList({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<ProductList> createState() => _ProductListState();
+}
+
+class _ProductListState extends State<ProductList> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      Provider.of<Products>(context, listen: false).fetchAndSetProducts();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final productsData = Provider.of<Products>(context);
+    final productsData = Provider.of<Products>(context, listen: false);
     final filterProduct = Provider.of<Filter>(context).selectedOption;
 
     final products =

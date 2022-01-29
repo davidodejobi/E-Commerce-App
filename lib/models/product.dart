@@ -1,4 +1,3 @@
-import 'package:e_commerce_app/models/category.dart';
 import 'package:flutter/cupertino.dart';
 
 enum SubCategory {
@@ -9,7 +8,7 @@ enum SubCategory {
 
 class Product with ChangeNotifier {
   final String? id;
-  final List<ProductCategory>? categories;
+
   final String? title;
   final String? description;
   final double? price;
@@ -19,7 +18,6 @@ class Product with ChangeNotifier {
 
   Product({
     this.id,
-    this.categories,
     this.title,
     this.description,
     this.price,

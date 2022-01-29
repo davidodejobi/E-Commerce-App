@@ -39,6 +39,10 @@ class SingleUserProduct extends StatelessWidget {
               height: 100,
               width: size.width * 0.20,
             ),
+            placeholder: (context, url) => const CircularProgressIndicator(),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
+            fadeOutDuration: const Duration(seconds: 1),
+            fadeInDuration: const Duration(seconds: 3),
             imageUrl: product!.imageUrl!,
           ),
           const SizedBox(
