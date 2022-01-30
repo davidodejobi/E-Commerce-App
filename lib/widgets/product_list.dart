@@ -15,12 +15,22 @@ class ProductList extends StatefulWidget {
 }
 
 class _ProductListState extends State<ProductList> {
+  bool _isLoading = false;
+
   @override
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
+      setState(() {
+        _isLoading = true;
+      });
+      print(_isLoading);
       Provider.of<Products>(context, listen: false).fetchAndSetProducts();
     });
+    setState(() {
+      _isLoading = false;
+    });
+    print(_isLoading);
   }
 
   @override
@@ -33,21 +43,25 @@ class _ProductListState extends State<ProductList> {
 
     Size size = MediaQuery.of(context).size;
 
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: products.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisSpacing: kDefaultPadding / 2,
-        mainAxisSpacing: kDefaultPadding,
-        crossAxisCount: 2,
-        childAspectRatio: 0.65,
-        mainAxisExtent: size.height * 0.35,
-      ),
-      itemBuilder: (context, index) => ChangeNotifierProvider.value(
-        value: products[index],
-        child: const ProductListItem(),
-      ),
-    );
+    return _isLoading
+        ? const Center(
+            child: CircularProgressIndicator.adaptive(),
+          )
+        : GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: products.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisSpacing: kDefaultPadding / 2,
+              mainAxisSpacing: kDefaultPadding,
+              crossAxisCount: 2,
+              childAspectRatio: 0.65,
+              mainAxisExtent: size.height * 0.35,
+            ),
+            itemBuilder: (context, index) => ChangeNotifierProvider.value(
+              value: products[index],
+              child: const ProductListItem(),
+            ),
+          );
   }
 }

@@ -27,22 +27,19 @@ class Products with ChangeNotifier {
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body);
-      print(extractedData);
+
       final List<Product> loadedProducts = [];
-      print(loadedProducts);
+
       extractedData.forEach((prodId, prodData) {
-        print(loadedProducts);
         loadedProducts.add(Product(
-          id: prodId,
-          title: prodData['title'],
           description: prodData['description'],
-          price: prodData['price'],
-          subCategory: EnumToString.fromString(
-            SubCategory.values,
-            prodData['subCategory'],
-          ),
+          id: prodId,
           imageUrl: prodData['imageUrl'],
           isFavorite: prodData['isFavorite'],
+          price: prodData['price'],
+          subCategory: EnumToString.fromString(
+              SubCategory.values, prodData['subCategory'].split('.').last),
+          title: prodData['title'],
         ));
       });
       _items = loadedProducts;
