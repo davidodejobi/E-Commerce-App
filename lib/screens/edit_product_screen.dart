@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '/widgets/widgets.dart';
 import '../constant.dart';
-import '../models/models.dart';
+import '../provider/provider.dart';
 
 class EditProductScreen extends StatefulWidget {
   final String? id;
@@ -111,15 +111,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
     }
     _form.currentState!.save();
     if (_editedProduct.id != null) {
-      Provider.of<Products>(context, listen: false).updateProduct(
+      await Provider.of<Products>(context, listen: false).updateProduct(
           _editedProduct.id!,
           _editedProduct,
           _selectedCategory!,
           widget.isFavorite!);
-      setState(() {
-        _isLoading = false;
-      });
-      Navigator.of(context).pop();
     } else {
       try {
         await Provider.of<Products>(context, listen: false)
@@ -140,13 +136,18 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     )
                   ],
                 ));
-      } finally {
-        setState(() {
-          _isLoading = false;
-        });
-        Navigator.of(context).pop();
       }
+      // finally {
+      //   setState(() {
+      //     _isLoading = false;
+      //   });
+      //   Navigator.of(context).pop();
+      // }
     }
+    setState(() {
+      _isLoading = false;
+    });
+    Navigator.of(context).pop();
   }
 
   /*

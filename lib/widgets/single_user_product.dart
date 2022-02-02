@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce_app/screens/edit_product_screen.dart';
 import 'package:flutter/material.dart';
 
-import '/models/models.dart';
+import '/provider/provider.dart';
 import '../constant.dart';
 
 class SingleUserProduct extends StatelessWidget {
@@ -46,15 +46,22 @@ class SingleUserProduct extends StatelessWidget {
             imageUrl: product!.imageUrl!,
           ),
           const SizedBox(
-            width: kDefaultPadding,
+            width: kDefaultPadding / 2,
           ),
-          Text(
-            product!.title!,
-            style: Theme.of(context).textTheme.headline6!.copyWith(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                ),
+          Container(
+            constraints: BoxConstraints(
+              maxWidth: size.width * 0.3,
+            ),
+            child: Text(
+              product!.title!,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.headline6!.copyWith(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                  ),
+            ),
           ),
           const Spacer(),
           IconButton(

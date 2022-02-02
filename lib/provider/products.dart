@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:enum_to_string/enum_to_string.dart';
 
-import '/models/models.dart';
+import '/models/http_exception.dart';
+import '/provider/provider.dart';
 
 class Products with ChangeNotifier {
   List<Product> _items = [];
@@ -121,25 +122,63 @@ class Products with ChangeNotifier {
     // throw error;
   }
 
-  void updateProduct(
-      String id, Product newProduct, SubCategory subCategory, bool isFavorite) {
+  Future<void> updateProduct(String id, Product newProduct,
+      SubCategory subCategory, bool isFavorite) async {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
-      _items[prodIndex] = Product(
-        id: DateTime.now().toString(),
-        title: newProduct.title,
-        description: newProduct.description,
-        subCategory: subCategory,
-        price: newProduct.price,
-        imageUrl: newProduct.imageUrl,
-        isFavorite: isFavorite,
+      final url = Uri.https(
+        "e-commerce-d85d2-default-rtdb.firebaseio.com",
+        "/products/$id.json",
       );
+      http.patch(url,
+          body: json.encode({
+            'title': newProduct.title,
+            'description': newProduct.description,
+            'price': newProduct.price,
+            'imageUrl': newProduct.imageUrl,
+            'subCategory': subCategory.toString(),
+          }));
+      _items[prodIndex] = newProduct;
       notifyListeners();
     } else {}
   }
 
-  void deleteProduct(String id) {
-    _items.removeWhere((prod) => prod.id == id);
+  Future<void> deleteProduct(String id) async {
+    final url = Uri.https(
+      "e-commerce-d85d2-default-rtdb.firebaseio.com",
+      "/products/$id.json",
+    );
+    final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
+    var existingProduct = _items[existingProductIndex];
+    _items.removeAt(existingProductIndex);
     notifyListeners();
+    final response = await http.delete(url);
+    if (response.statusCode >= 400) {
+      _items.insert(existingProductIndex, existingProduct);
+      notifyListeners();
+      throw HttpException('Could not delete product.');
+    }
   }
 }
+
+//   Future<void> deleteProduct(String id) async {
+//     final url = Uri.https(
+//       "e-commerce-d85d2-default-rtdb.firebaseio.com",
+//       "/products/$id",
+//     );
+//     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
+//     var existingProduct = _items[existingProductIndex];
+//     try { 
+//       final response = await http.delete(url);
+//       if (response.statusCode >= 400) {
+//         throw HttpException('Could not delete product.');
+//       }
+//       existingProduct = null as Product;
+//     } catch (_) {
+//       _items.insert(existingProductIndex, existingProduct);
+//       notifyListeners();
+//     }
+//     _items.removeWhere((prod) => prod.id == id);
+//     notifyListeners();
+//   }
+

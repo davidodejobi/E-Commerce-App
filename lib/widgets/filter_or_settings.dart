@@ -1,5 +1,4 @@
-import 'package:e_commerce_app/models/filter.dart';
-import 'package:e_commerce_app/models/models.dart';
+import 'package:e_commerce_app/provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

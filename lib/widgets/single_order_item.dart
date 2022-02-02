@@ -3,7 +3,7 @@ import 'package:e_commerce_app/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '/models/models.dart';
+import '/provider/provider.dart';
 
 class SingleOrderItem extends StatefulWidget {
   final OrderItem? orders;

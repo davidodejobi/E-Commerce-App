@@ -1,5 +1,5 @@
 import 'package:e_commerce_app/constant.dart';
-import 'package:e_commerce_app/models/filter.dart';
+import 'package:e_commerce_app/provider/filter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

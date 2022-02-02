@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '/constant.dart';
-import '/models/models.dart';
+import '/provider/provider.dart';
 import '/widgets/widgets.dart';
 
 class CartScreen extends StatelessWidget {
@@ -111,8 +111,12 @@ class CartScreen extends StatelessWidget {
                                     .hideCurrentSnackBar();
 
                                 final snackBar = SnackBar(
-                                  content: const Text(
-                                      'There are no items in your cart, kindly add :('),
+                                  backgroundColor: Colors.white,
+                                  content: Text(
+                                    'There are no items in your cart, kindly add :(',
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
+                                  ),
                                   duration: const Duration(seconds: 2),
                                   action: SnackBarAction(
                                     label: 'HomePage',

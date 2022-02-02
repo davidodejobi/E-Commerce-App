@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import '/models/models.dart';
+import '/provider/provider.dart';
 
 class BaseCartItem with ChangeNotifier {
   final String? id;

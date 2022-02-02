@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '/models/models.dart';
+import '/provider/provider.dart';
 import '/widgets/widgets.dart';
 import '../constant.dart';
 
@@ -15,6 +15,7 @@ class ProductList extends StatefulWidget {
 }
 
 class _ProductListState extends State<ProductList> {
+  // bool _isInit = true;
   bool _isLoading = false;
 
   @override
@@ -24,14 +25,35 @@ class _ProductListState extends State<ProductList> {
       setState(() {
         _isLoading = true;
       });
-      print(_isLoading);
-      Provider.of<Products>(context, listen: false).fetchAndSetProducts();
+
+      Provider.of<Products>(context, listen: false)
+          .fetchAndSetProducts()
+          .then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
     });
-    setState(() {
-      _isLoading = false;
-    });
-    print(_isLoading);
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   if (_isInit) {
+  //     setState(() {
+  //       _isLoading = true;
+  //     });
+  //     Provider.of<Products>(context, listen: false)
+  //         .fetchAndSetProducts()
+  //         .then((_) {
+  //       setState(() {
+  //         _isLoading = false;
+  //       });
+  //     });
+  //   }
+
+  //   _isInit = false;
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {

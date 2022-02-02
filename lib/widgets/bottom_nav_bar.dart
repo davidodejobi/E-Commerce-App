@@ -5,7 +5,7 @@ import '/screens/cart_screen.dart';
 import '/widgets/widgets.dart';
 import '../constant.dart';
 import '../screens/home_screen.dart';
-import '/models/models.dart';
+import '/provider/provider.dart';
 
 // ignore: must_be_immutable
 class BottomNavBar extends StatelessWidget {

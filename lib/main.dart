@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '/widgets/widgets.dart';
-import '/models/models.dart';
-import '/models/theme.dart';
+import '/provider/provider.dart';
+import '/provider/theme.dart';
 
 void main() {
   runApp(MyApp());

@@ -1,9 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_commerce_app/constant.dart';
-import 'package:e_commerce_app/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../provider/provider.dart';
 import '/widgets/rounded_icon_button.dart';
 import '../constant.dart';
 
@@ -215,7 +214,11 @@ class ProductDetailsScreen extends StatelessWidget {
                         // snackbar and hides it immediately a button is pressed to
                         // avoid the user from having to wait for the timer to finish
                         final snackBar = SnackBar(
-                          content: const Text('Product added to your cart'),
+                          backgroundColor: Colors.white,
+                          content: Text(
+                            'Product added to your cart',
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
                           duration: const Duration(seconds: 1),
                           action: SnackBarAction(
                             label: 'Undo',
