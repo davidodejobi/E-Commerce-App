@@ -53,7 +53,6 @@ class UserProductScreen extends StatelessWidget {
                             await Provider.of<Products>(context, listen: false)
                                 .deleteProduct(product.items[index].id!);
                           } catch (error) {
-                            print(error);
                             final snackBar = SnackBar(
                               backgroundColor: Colors.white,
                               content: Text(

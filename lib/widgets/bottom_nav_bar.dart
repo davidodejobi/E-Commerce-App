@@ -9,8 +9,6 @@ import '/provider/provider.dart';
 
 // ignore: must_be_immutable
 class BottomNavBar extends StatelessWidget {
-  // GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-
   BottomNavBar({Key? key}) : super(key: key);
 
   List<Widget> pages = <Widget>[
@@ -30,6 +28,7 @@ class BottomNavBar extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       // body: pages[manager.currentIndex!],
+      // IndexedStack allows you to easily switch widgets in your app.
       body: IndexedStack(
         index: manager.currentIndex!,
         children: pages,
