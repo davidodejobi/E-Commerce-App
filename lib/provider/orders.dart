@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/foundation.dart';
 import '/provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 class OrderItem {
   final String? id;
@@ -18,18 +22,75 @@ class OrderItem {
 }
 
 class Orders with ChangeNotifier {
-  final _orders = [];
+  List<OrderItem> _orders = [];
 
   List<OrderItem> get orders => List.unmodifiable(_orders);
 
-  void addOrder(List<BaseCartItem> cartProducts, double total) {
+  Future<void> addOrder(List<BaseCartItem> cartProducts, double total) async {
+    final url = Uri.https(
+      "e-commerce-d85d2-default-rtdb.firebaseio.com",
+      "/orders.json",
+    );
+    final timeStamp = DateTime.now();
+    final response = await http.post(
+      url,
+      body: json.encode({
+        'amount': total,
+        'dateTime': timeStamp.toIso8601String(),
+        'products': cartProducts
+            .map((cp) => {
+                  'íd': cp.id,
+                  'title': cp.title,
+                  'quantity': cp.quantity,
+                  'price': cp.price,
+                  'imageUrl': cp.imageUrl,
+                  'subCategory': cp.subCategory.toString(),
+                })
+            .toList(),
+      }),
+    );
+
     _orders.insert(
         0,
         OrderItem(
-            id: DateTime.now().toString(),
+            id: json.decode(response.body)['name'],
             amount: total,
-            dateTime: DateTime.now(),
+            dateTime: timeStamp,
             products: cartProducts));
+    notifyListeners();
+  }
+
+  Future<void> fetchAndSetOrders() async {
+    final url = Uri.parse(
+      "https://e-commerce-d85d2-default-rtdb.firebaseio.com/orders.json",
+    );
+    final response = await http.get(url);
+    final List<OrderItem> loadedOrders = [];
+    final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    if (extractedData.isEmpty) {
+      return;
+    }
+    extractedData.forEach((orderId, orderData) {
+      loadedOrders.add(OrderItem(
+        id: orderId,
+        amount: orderData['amount'],
+        dateTime: DateTime.parse(orderData['dateTime']),
+        products: (orderData['products'] as List<dynamic>)
+            .map(
+              (item) => BaseCartItem(
+                id: item['id'],
+                title: item['title'],
+                imageUrl: item['imageUrl'],
+                subCategory: EnumToString.fromString(
+                    SubCategory.values, item['subCategory'].split('.').last),
+                quantity: item['quantity'],
+                price: item['price'],
+              ),
+            )
+            .toList(),
+      ));
+    });
+    _orders = loadedOrders.reversed.toList();
     notifyListeners();
   }
 }

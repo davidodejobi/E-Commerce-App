@@ -15,26 +15,31 @@ class ProductList extends StatefulWidget {
 }
 
 class _ProductListState extends State<ProductList> {
-  // bool _isInit = true;
   bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () {
-      setState(() {
-        _isLoading = true;
-      });
 
-      Provider.of<Products>(context, listen: false)
-          .fetchAndSetProducts()
-          .then((_) {
-        setState(() {
-          _isLoading = false;
-        });
+    setState(() {
+      _isLoading = true;
+    });
+
+    Provider.of<Products>(context, listen: false)
+        .fetchAndSetProducts()
+        .then((_) {
+      setState(() {
+        _isLoading = false;
       });
     });
   }
+
+  // bool _isInit = true;
+  // @override
+  // void dispose() {
+  //   _isLoading;
+  //   super.dispose();
+  // }
 
   // @override
   // void didChangeDependencies() {

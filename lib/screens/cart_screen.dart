@@ -96,64 +96,7 @@ class CartScreen extends StatelessWidget {
                   const SizedBox(
                     width: 5,
                   ),
-                  Expanded(
-                    child: Consumer<Manager>(
-                      builder: (_, tabManager, __) => InkWell(
-                        onTap: cart.items.isNotEmpty
-                            ? () {
-                                Provider.of<Orders>(context, listen: false)
-                                    .addOrder(cart.items.values.toList(),
-                                        cart.totalAmount);
-                                cart.clear();
-                              }
-                            : () {
-                                ScaffoldMessenger.of(context)
-                                    .hideCurrentSnackBar();
-
-                                final snackBar = SnackBar(
-                                  backgroundColor: Colors.white,
-                                  content: Text(
-                                    'There are no items in your cart, kindly add :(',
-                                    style:
-                                        Theme.of(context).textTheme.bodyText1,
-                                  ),
-                                  duration: const Duration(seconds: 2),
-                                  action: SnackBarAction(
-                                    label: 'HomePage',
-                                    onPressed: () {
-                                      tabManager.gotoHomePage();
-                                    },
-                                  ),
-                                );
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBar);
-                              },
-                        borderRadius: BorderRadius.circular(20),
-                        child: Container(
-                          height: 60,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: kDefaultPadding,
-                          ),
-                          decoration: BoxDecoration(
-                            gradient: kDefaultGradient,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Order Now',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1!
-                                  .copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  OrderButton(cart: cart),
                 ],
               ),
             ),
@@ -161,6 +104,87 @@ class CartScreen extends StatelessWidget {
               height: kDefaultPadding / 2,
             )
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class OrderButton extends StatefulWidget {
+  const OrderButton({
+    Key? key,
+    required this.cart,
+  }) : super(key: key);
+
+  final Cart cart;
+
+  @override
+  State<OrderButton> createState() => _OrderButtonState();
+}
+
+class _OrderButtonState extends State<OrderButton> {
+  bool _isLoading = false;
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Consumer<Manager>(
+        builder: (_, tabManager, __) => InkWell(
+          onTap: (widget.cart.items.isNotEmpty || _isLoading)
+              ? () async {
+                  setState(() {
+                    _isLoading = true;
+                  });
+                  await Provider.of<Orders>(context, listen: false).addOrder(
+                      widget.cart.items.values.toList(),
+                      widget.cart.totalAmount);
+                  widget.cart.clear();
+                  setState(() {
+                    _isLoading = false;
+                  });
+                }
+              : () {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+                  final snackBar = SnackBar(
+                    backgroundColor: Colors.white,
+                    content: Text(
+                      'There are no items in your cart, kindly add :(',
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    duration: const Duration(seconds: 2),
+                    action: SnackBarAction(
+                      label: 'HomePage',
+                      onPressed: () {
+                        tabManager.gotoHomePage();
+                      },
+                    ),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                },
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            height: 60,
+            padding: const EdgeInsets.symmetric(
+              horizontal: kDefaultPadding,
+            ),
+            decoration: BoxDecoration(
+              gradient: kDefaultGradient,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Center(
+              child: _isLoading
+                  ? const CircularProgressIndicator.adaptive(
+                      backgroundColor: Colors.white,
+                    )
+                  : Text(
+                      'Order Now',
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                    ),
+            ),
+          ),
         ),
       ),
     );

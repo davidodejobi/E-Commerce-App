@@ -29,7 +29,11 @@ class BottomNavBar extends StatelessWidget {
     final itemCount = Provider.of<Cart>(context, listen: true).itemCount;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: pages[manager.currentIndex!],
+      // body: pages[manager.currentIndex!],
+      body: IndexedStack(
+        index: manager.currentIndex!,
+        children: pages,
+      ),
       drawer: MyDrawer(
         size: size,
       ),
