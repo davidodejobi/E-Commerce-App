@@ -1,22 +1,34 @@
-import 'package:e_commerce_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '/widgets/widgets.dart';
+import '/provider/provider.dart';
+import '/provider/theme.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
 
+  final theme = AppTheme.getTheme(false);
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'E Commerce App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => Products()),
+        ChangeNotifierProvider(create: (_) => Categories()),
+        ChangeNotifierProvider(create: (_) => Cart()),
+        ChangeNotifierProvider(create: (_) => Manager()),
+        ChangeNotifierProvider(create: (_) => Orders()),
+      ],
+      child: MaterialApp(
+        title: 'E Commerce App',
+        theme: theme,
+        home: BottomNavBar(),
       ),
-      home: const HomeScreen(),
     );
   }
 }
