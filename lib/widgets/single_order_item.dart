@@ -5,16 +5,16 @@ import 'package:intl/intl.dart';
 
 import '/provider/provider.dart';
 
-class SingleOrderItem extends StatefulWidget {
+class SingleOrderItemWidget extends StatefulWidget {
   final OrderItem? orders;
 
-  const SingleOrderItem({Key? key, this.orders}) : super(key: key);
+  const SingleOrderItemWidget({Key? key, this.orders}) : super(key: key);
 
   @override
-  State<SingleOrderItem> createState() => _SingleOrderItemState();
+  State<SingleOrderItemWidget> createState() => _SingleOrderItemWidgetState();
 }
 
-class _SingleOrderItemState extends State<SingleOrderItem> {
+class _SingleOrderItemWidgetState extends State<SingleOrderItemWidget> {
   bool _isExpanded = false;
 
   @override

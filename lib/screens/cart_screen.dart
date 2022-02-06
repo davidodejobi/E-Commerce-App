@@ -102,7 +102,10 @@ class CartScreen extends StatelessWidget {
             ),
             const SizedBox(
               height: kDefaultPadding / 2,
-            )
+            ),
+            const SizedBox(
+              height: kDefaultPadding * 4,
+            ),
           ],
         ),
       ),

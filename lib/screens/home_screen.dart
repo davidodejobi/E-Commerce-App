@@ -6,7 +6,8 @@ import 'package:provider/provider.dart';
 import '/widgets/widgets.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final ScrollController? controller;
+  const HomePage({Key? key, required this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +31,6 @@ class HomePage extends StatelessWidget {
                             fontSize: 12,
                             fontWeight: FontWeight.normal,
                           ),
-                      // style: TextStyle(
-                      //     fontSize: 11,
-                      //     fontWeight: FontWeight.bold,
-                      //     color: Colors.grey)
                     ),
                     Text(
                       'Jakarta, INA',
@@ -47,6 +44,7 @@ class HomePage extends StatelessWidget {
               ),
               Expanded(
                 child: ListView(
+                  controller: controller,
                   children: [
                     const SizedBox(
                       height: kDefaultPadding / 2,
@@ -69,6 +67,9 @@ class HomePage extends StatelessWidget {
                       height: kDefaultPadding,
                     ),
                     const ProductList(),
+                    const SizedBox(
+                      height: kDefaultPadding,
+                    ),
                   ],
                 ),
               ),

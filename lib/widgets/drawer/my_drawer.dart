@@ -34,7 +34,7 @@ class MyDrawer extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => BottomNavBar(),
+                    builder: (context) => const BottomNavBar(),
                   ),
                 );
               },

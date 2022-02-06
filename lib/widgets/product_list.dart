@@ -21,9 +21,7 @@ class _ProductListState extends State<ProductList> {
   void initState() {
     super.initState();
 
-    setState(() {
-      _isLoading = true;
-    });
+    _isLoading = true;
 
     Provider.of<Products>(context, listen: false)
         .fetchAndSetProducts()

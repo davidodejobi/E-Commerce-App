@@ -17,6 +17,8 @@ class ProductDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
+    List<Product> prod = [product!];
+
     final cart = Provider.of<Cart>(context, listen: false);
 
     return Scaffold(
@@ -153,18 +155,10 @@ class ProductDetailsScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Consumer<Manager>(
-                        builder: (_, tabManager, __) => InkWell(
+                      child: Consumer<SingleOrder>(
+                        builder: (_, oSingItem, __) => InkWell(
                           onTap: () {
-                            cart.addItem(
-                              productId: product!.id,
-                              price: product!.price,
-                              title: product!.title,
-                              imageUrl: product!.imageUrl,
-                              subCategory: product!.subCategory,
-                            );
-
-                            tabManager.gotoCartPage();
+                            oSingItem.addOrder(prod, product!.price!);
 
                             Navigator.of(context).pop();
                           },

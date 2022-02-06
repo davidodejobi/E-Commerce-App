@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import '/provider/provider.dart';
 
-class BaseCartItem with ChangeNotifier {
+class BaseCartItem {
   final String? id;
   final String? title;
   final String? imageUrl;

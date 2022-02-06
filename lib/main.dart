@@ -23,11 +23,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => Cart()),
         ChangeNotifierProvider(create: (_) => Manager()),
         ChangeNotifierProvider(create: (_) => Orders()),
+        ChangeNotifierProvider(create: (_) => SingleOrder()),
       ],
       child: MaterialApp(
         title: 'E Commerce App',
         theme: theme,
-        home: BottomNavBar(),
+        home: const BottomNavBar(),
       ),
     );
   }
