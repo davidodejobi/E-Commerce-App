@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import '../constant.dart';
@@ -32,13 +33,17 @@ class OrdersScreen extends StatelessWidget {
                   .fetchAndSetOrders(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
+                  return Center(
+                    child: Lottie.asset(
+                      'assets/animations/loading.json',
+                    ),
                   );
                 } else {
                   if (snapshot.error != null) {
-                    return const Center(
-                      child: Text('An error occured'),
+                    return Center(
+                      child: Lottie.asset(
+                        'assets/animations/error.json',
+                      ),
                     );
                   } else {
                     return Consumer<Orders>(

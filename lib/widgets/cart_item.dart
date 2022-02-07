@@ -33,8 +33,6 @@ class CartItem extends StatefulWidget {
 }
 
 class _CartItemState extends State<CartItem> {
-  bool isChecked = true;
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -49,7 +47,7 @@ class _CartItemState extends State<CartItem> {
           size: 40,
         ),
         alignment: Alignment.centerRight,
-        padding: const EdgeInsets.only(right: 20),
+        // padding: const EdgeInsets.only(right: 20),
         margin: const EdgeInsets.symmetric(
           horizontal: 15,
           vertical: 4,
@@ -100,6 +98,7 @@ class _CartItemState extends State<CartItem> {
             borderRadius: BorderRadius.circular(kDefaultPadding)),
         height: 100,
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             CachedNetworkImage(
               imageBuilder: (context, imageProvider) => Container(
@@ -120,18 +119,17 @@ class _CartItemState extends State<CartItem> {
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  widget.title!,
-                  style: Theme.of(context).textTheme.headline6!.copyWith(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        decoration: isChecked == true
-                            ? TextDecoration.none
-                            : TextDecoration.lineThrough,
-                      ),
+                FittedBox(
+                  child: Text(
+                    widget.title!,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.headline6!.copyWith(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
+                  ),
                 ),
                 Text(
                   widget.subCategory.toString().split('.').last,
@@ -139,9 +137,6 @@ class _CartItemState extends State<CartItem> {
                         color: Colors.grey[500],
                         fontWeight: FontWeight.w400,
                         fontSize: 12,
-                        decoration: isChecked == true
-                            ? TextDecoration.none
-                            : TextDecoration.lineThrough,
                       ),
                 ),
                 const Spacer(),
@@ -149,79 +144,41 @@ class _CartItemState extends State<CartItem> {
                   '\$${widget.price}',
                   style: Theme.of(context).textTheme.headline1!.copyWith(
                         color: Colors.black,
-                        fontSize: 22,
+                        fontSize: 20,
                         fontWeight: FontWeight.w700,
-                        decoration: isChecked == true
-                            ? TextDecoration.none
-                            : TextDecoration.lineThrough,
                       ),
                 ),
               ],
             ),
-            const Spacer(),
-            Column(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Consumer<Cart>(
-                    builder: (_, cart, __) => SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: Checkbox(
-                              value: isChecked,
-                              onChanged: (bool? checked) {
-                                setState(
-                                  () {
-                                    isChecked = checked!;
-                                  },
-                                );
-                              }),
-                        )),
-                // Container(
-                //   height: 25,
-                //   width: 25,
-                //   margin: const EdgeInsets.only(
-                //     right: 8,
-                //   ),
-                //   decoration: BoxDecoration(
-                //     gradient: kDefaultGradient,
-                //     borderRadius: BorderRadius.circular(kDefaultPadding / 6),
-                //   ),
-                //   child: const Icon(
-                //     Icons.check,
-                //     color: Colors.white,
-                //     size: 20,
-                //   ),
-                // ),
-                Row(
-                  children: [
-                    Consumer<Cart>(
-                      builder: (_, cart, ch) => IconButton(
-                          onPressed: () {
-                            cart.removeSingleItem(widget.productId!);
-                          },
-                          icon: ch!),
-                      child: const Icon(Icons.remove,
-                          color: Colors.black, size: 15),
-                    ),
-                    Text(
-                      '${widget.quantity}',
-                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
-                          ),
-                    ),
-                    Consumer<Cart>(
-                      builder: (_, cart, ch) => IconButton(
-                          onPressed: () {
-                            cart.addSingleItem(widget.productId!);
-                          },
-                          icon: ch!),
-                      child:
-                          const Icon(Icons.add, color: Colors.black, size: 15),
-                    ),
-                  ],
+                  builder: (_, cart, ch) => IconButton(
+                      constraints: BoxConstraints(minWidth: 30),
+                      onPressed: () {
+                        cart.removeSingleItem(widget.productId!);
+                      },
+                      icon: ch!),
+                  child:
+                      const Icon(Icons.remove, color: Colors.black, size: 15),
+                ),
+                Text(
+                  '${widget.quantity}',
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                      ),
+                ),
+                Consumer<Cart>(
+                  builder: (_, cart, ch) => IconButton(
+                      constraints: BoxConstraints(minWidth: 30),
+                      onPressed: () {
+                        cart.addSingleItem(widget.productId!);
+                      },
+                      icon: ch!),
+                  child: const Icon(Icons.add, color: Colors.black, size: 15),
                 ),
               ],
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import '/provider/provider.dart';
@@ -69,8 +70,10 @@ class _ProductListState extends State<ProductList> {
     Size size = MediaQuery.of(context).size;
 
     return _isLoading
-        ? const Center(
-            child: CircularProgressIndicator.adaptive(),
+        ? Center(
+            child: Lottie.asset(
+              'assets/animations/loading.json',
+            ),
           )
         : GridView.builder(
             shrinkWrap: true,
