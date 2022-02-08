@@ -26,7 +26,7 @@ class _ProductListState extends State<ProductList> {
 
     Provider.of<Products>(context, listen: false)
         .fetchAndSetProducts()
-        .then((_) {
+        .then((error) {
       setState(() {
         _isLoading = false;
       });

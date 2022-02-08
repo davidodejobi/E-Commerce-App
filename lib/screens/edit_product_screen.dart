@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import '/widgets/widgets.dart';
@@ -19,7 +20,8 @@ class EditProductScreen extends StatefulWidget {
   State<EditProductScreen> createState() => _EditProductScreenState();
 }
 
-class _EditProductScreenState extends State<EditProductScreen> {
+class _EditProductScreenState extends State<EditProductScreen>
+    with SingleTickerProviderStateMixin {
   final _imageUrlController = TextEditingController();
   final _imageFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
@@ -31,6 +33,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
     imageUrl: '',
   );
   bool _isLoading = false;
+
+  late AnimationController _controller;
 
   var _initValues = {
     'id': '',
@@ -46,6 +50,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   @override
   void dispose() {
     _imageUrlController.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -85,6 +90,17 @@ class _EditProductScreenState extends State<EditProductScreen> {
     _imageFocusNode.addListener(() {
       _updateImageUrl();
     });
+
+    _controller = AnimationController(
+      vsync: this,
+    );
+
+    _controller.addStatusListener((status) async {
+      if (status == AnimationStatus.completed) {
+        Navigator.of(context, rootNavigator: true).pop();
+        _controller.reset();
+      }
+    });
     super.initState();
   }
 
@@ -122,20 +138,38 @@ class _EditProductScreenState extends State<EditProductScreen> {
             .addProduct(_editedProduct, _selectedCategory!);
       } catch (error) {
         // ignore: prefer_void_to_null
-        await showDialog<Null>(
-            context: context,
-            builder: (ctx) => AlertDialog(
-                  title: const Text('An error occured'),
-                  content: const Text('Something went wrong'),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Text('Okay'),
-                      onPressed: () {
-                        Navigator.of(ctx).pop();
-                      },
-                    )
-                  ],
-                ));
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return Dialog(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Lottie.asset(
+                    'assets/animations/error.json',
+                    repeat: false,
+                    controller: _controller,
+                    onLoaded: (composition) {
+                      _controller.duration = composition.duration;
+                      _controller.forward();
+                    },
+                  ),
+                  Text(
+                    'Something Went Wrong',
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  const SizedBox(
+                    height: kDefaultPadding,
+                  )
+                ],
+              ),
+            );
+          },
+        );
       }
       // finally {
       //   setState(() {
@@ -221,9 +255,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 ),
               ),
               _isLoading
-                  ? const Expanded(
+                  ? Expanded(
                       child: Center(
-                        child: CircularProgressIndicator(),
+                        child: Lottie.asset(
+                          'assets/animations/loading.json',
+                        ),
                       ),
                     )
                   : Form(

@@ -155,7 +155,7 @@ class _CartItemState extends State<CartItem> {
               children: [
                 Consumer<Cart>(
                   builder: (_, cart, ch) => IconButton(
-                      constraints: BoxConstraints(minWidth: 30),
+                      constraints: const BoxConstraints(minWidth: 30),
                       onPressed: () {
                         cart.removeSingleItem(widget.productId!);
                       },
@@ -173,7 +173,7 @@ class _CartItemState extends State<CartItem> {
                 ),
                 Consumer<Cart>(
                   builder: (_, cart, ch) => IconButton(
-                      constraints: BoxConstraints(minWidth: 30),
+                      constraints: const BoxConstraints(minWidth: 30),
                       onPressed: () {
                         cart.addSingleItem(widget.productId!);
                       },

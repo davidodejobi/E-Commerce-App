@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce_app/screens/edit_product_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 import '/provider/provider.dart';
 import '../constant.dart';
@@ -39,10 +40,14 @@ class SingleUserProduct extends StatelessWidget {
               height: 100,
               width: size.width * 0.20,
             ),
-            placeholder: (context, url) => const CircularProgressIndicator(),
-            errorWidget: (context, url, error) => const Icon(Icons.error),
+            placeholder: (context, url) => Lottie.asset(
+              'assets/animations/loading.json',
+            ),
+            errorWidget: (context, url, error) => Lottie.asset(
+              'assets/animations/error.json',
+            ),
             fadeOutDuration: const Duration(seconds: 1),
-            fadeInDuration: const Duration(seconds: 3),
+            fadeInDuration: const Duration(seconds: 2),
             imageUrl: product!.imageUrl!,
           ),
           const SizedBox(

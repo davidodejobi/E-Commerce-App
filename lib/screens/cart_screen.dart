@@ -228,6 +228,43 @@ class _OrderButtonState extends State<OrderButton>
     );
   }
 
+  void showDoneDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Lottie.asset(
+                'assets/animations/done.json',
+                repeat: false,
+                controller: _controller,
+                onLoaded: (composition) {
+                  _controller.duration = composition.duration;
+                  _controller.forward();
+                },
+              ),
+              Text(
+                'Order Placed Successfully',
+                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              const SizedBox(
+                height: kDefaultPadding,
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+
   /*
 Expanded(
       child: FutureBuilder(
@@ -337,39 +374,3 @@ Consumer<Manager>(
         ),
       ),
   */
-
-  void showDoneDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return Dialog(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Lottie.asset(
-                'assets/animations/done.json',
-                repeat: false,
-                controller: _controller,
-                onLoaded: (composition) {
-                  _controller.duration = composition.duration;
-                  _controller.forward();
-                },
-              ),
-              Text(
-                'Order Placed Successfully',
-                style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              const SizedBox(
-                height: kDefaultPadding,
-              )
-            ],
-          ),
-        );
-      },
-    );
-  }
-}

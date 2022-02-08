@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/provider.dart';
@@ -154,40 +155,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 height: 60,
                 child: Row(
                   children: [
-                    Expanded(
-                      child: Consumer<SingleOrder>(
-                        builder: (_, oSingItem, __) => InkWell(
-                          onTap: () {
-                            oSingItem.addOrder(prod, product!.price!);
-
-                            Navigator.of(context).pop();
-                          },
-                          borderRadius: BorderRadius.circular(20),
-                          child: Container(
-                            height: 60,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: kDefaultPadding,
-                            ),
-                            decoration: BoxDecoration(
-                              gradient: kDefaultGradient,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'Order Now',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1!
-                                    .copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    OrderButton(prod: prod, product: product),
                     const SizedBox(
                       width: kDefaultPadding,
                     ),
@@ -244,6 +212,116 @@ class ProductDetailsScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class OrderButton extends StatefulWidget {
+  const OrderButton({
+    Key? key,
+    required this.prod,
+    required this.product,
+  }) : super(key: key);
+
+  final List<Product> prod;
+  final Product? product;
+
+  @override
+  State<OrderButton> createState() => _OrderButtonState();
+}
+
+class _OrderButtonState extends State<OrderButton>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    _controller = AnimationController(
+      vsync: this,
+    );
+
+    _controller.addStatusListener((status) async {
+      if (status == AnimationStatus.completed) {
+        Navigator.of(context, rootNavigator: true).pop();
+        _controller.reset();
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Consumer<SingleOrder>(
+        builder: (_, oSingItem, __) => InkWell(
+          onTap: () {
+            oSingItem.addOrder(widget.prod, widget.product!.price!);
+
+            showDoneDialog(context);
+          },
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            height: 60,
+            padding: const EdgeInsets.symmetric(
+              horizontal: kDefaultPadding,
+            ),
+            decoration: BoxDecoration(
+              gradient: kDefaultGradient,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Center(
+              child: Text(
+                'Order Now',
+                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void showDoneDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Lottie.asset(
+                'assets/animations/done.json',
+                repeat: false,
+                controller: _controller,
+                onLoaded: (composition) {
+                  _controller.duration = composition.duration;
+                  _controller.forward();
+                },
+              ),
+              Text(
+                'Order Placed Successfully',
+                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              const SizedBox(
+                height: kDefaultPadding,
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 }
