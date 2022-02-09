@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/screens/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'E Commerce App',
         theme: theme,
-        home: const BottomNavBar(),
+        home: const AuthScreen(),
       ),
     );
   }
