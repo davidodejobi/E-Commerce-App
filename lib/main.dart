@@ -1,8 +1,7 @@
-import 'package:e_commerce_app/screens/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '/widgets/widgets.dart';
+import '/screens/auth_screen.dart';
 import '/provider/provider.dart';
 import '/provider/theme.dart';
 
@@ -25,6 +24,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => Manager()),
         ChangeNotifierProvider(create: (_) => Orders()),
         ChangeNotifierProvider(create: (_) => SingleOrder()),
+        ChangeNotifierProvider(create: (_) => Auth()),
       ],
       child: MaterialApp(
         title: 'E Commerce App',

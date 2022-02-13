@@ -6,3 +6,4 @@ export '/provider/cart.dart';
 export '/provider/manager.dart';
 export 'orders.dart';
 export 'single_order.dart';
+export 'auth.dart';
