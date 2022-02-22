@@ -33,7 +33,7 @@ class Orders with ChangeNotifier {
   Future<void> addOrder(List<BaseCartItem> cartProducts, double total) async {
     final url = Uri.https(
       "e-commerce-d85d2-default-rtdb.firebaseio.com",
-      "/orders.json",
+      "/orders.json?auth=$authToken",
     );
     final timeStamp = DateTime.now();
     final response = await http.post(

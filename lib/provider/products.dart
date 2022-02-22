@@ -96,7 +96,7 @@ class Products with ChangeNotifier {
   Future<void> addProduct(Product product, SubCategory subCategory) async {
     final url = Uri.https(
       "e-commerce-d85d2-default-rtdb.firebaseio.com",
-      "/products.json>?auth=$authToken",
+      "/products.json?auth=$authToken",
     );
     try {
       final response = await http.post(url,
@@ -153,6 +153,7 @@ class Products with ChangeNotifier {
     final url = Uri.https(
       "e-commerce-d85d2-default-rtdb.firebaseio.com",
       "/products/$id.json",
+      // {'auth': authToken},
     );
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     var existingProduct = _items[existingProductIndex];

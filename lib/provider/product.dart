@@ -39,7 +39,8 @@ class Product with ChangeNotifier {
     notifyListeners();
     final url = Uri.https(
       "e-commerce-d85d2-default-rtdb.firebaseio.com",
-      "/products/$id.json?auth=$token",
+      "/products/$id.json",
+      {'auth': token},
     );
     try {
       final response = await http.patch(url,
