@@ -24,6 +24,10 @@ class OrderItem {
 class Orders with ChangeNotifier {
   List<OrderItem> _orders = [];
 
+  final String? authToken;
+
+  Orders([this.authToken, this._orders = const []]);
+
   List<OrderItem> get orders => List.unmodifiable(_orders);
 
   Future<void> addOrder(List<BaseCartItem> cartProducts, double total) async {
@@ -62,7 +66,7 @@ class Orders with ChangeNotifier {
 
   Future<void> fetchAndSetOrders() async {
     final url = Uri.parse(
-      "https://e-commerce-d85d2-default-rtdb.firebaseio.com/orders.json",
+      "https://e-commerce-d85d2-default-rtdb.firebaseio.com/orders.json?auth=$authToken",
     );
     final response = await http.get(url);
     final List<OrderItem> loadedOrders = [];

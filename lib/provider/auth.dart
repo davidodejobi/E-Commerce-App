@@ -38,6 +38,7 @@ class Auth with ChangeNotifier {
           },
         ),
       );
+
       final responseData = json.decode(response.body);
       if (responseData['error'] != null) {
         throw HttpException(responseData['error']['message']);

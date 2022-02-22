@@ -21,6 +21,7 @@ class ProductDetailsScreen extends StatelessWidget {
     List<Product> prod = [product!];
 
     final cart = Provider.of<Cart>(context, listen: false);
+    final authData = Provider.of<Auth>(context, listen: false);
 
     return Scaffold(
       body: SafeArea(
@@ -81,7 +82,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           size: 18,
                         ),
                         onPressed: () {
-                          product!.toggleFavoriteStatus();
+                          product!.toggleFavoriteStatus(authData.token);
                         },
                       ),
                     ],

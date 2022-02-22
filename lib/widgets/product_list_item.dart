@@ -17,7 +17,8 @@ class ProductListItem extends StatefulWidget {
 class _ProductListItemState extends State<ProductListItem> {
   @override
   Widget build(BuildContext context) {
-    final product = Provider.of<Product>(context);
+    final product = Provider.of<Product>(context, listen: false);
+    final authData = Provider.of<Auth>(context, listen: false);
     return GestureDetector(
       // behavior: HitTestBehavior.translucent,
       onTap: () {
@@ -79,22 +80,24 @@ class _ProductListItemState extends State<ProductListItem> {
                     ],
                   ),
                 ),
-                InkWell(
-                  onTap: () {
-                    product.toggleFavoriteStatus();
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(kDefaultPadding / 6),
-                    decoration: BoxDecoration(
-                      gradient: kDefaultGradient,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Icon(
-                      product.isFavorite!
-                          ? Icons.favorite_sharp
-                          : Icons.favorite_border,
-                      color: Colors.white,
-                      size: 14,
+                Consumer<Product>(
+                  builder: (context, product, _) => InkWell(
+                    onTap: () {
+                      product.toggleFavoriteStatus(authData.token);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(kDefaultPadding / 6),
+                      decoration: BoxDecoration(
+                        gradient: kDefaultGradient,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Icon(
+                        product.isFavorite!
+                            ? Icons.favorite_sharp
+                            : Icons.favorite_border,
+                        color: Colors.white,
+                        size: 14,
+                      ),
                     ),
                   ),
                 )

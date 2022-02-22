@@ -33,19 +33,21 @@ class Product with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> toggleFavoriteStatus() async {
+  Future<void> toggleFavoriteStatus(String? token) async {
     bool? oldStatus = isFavorite;
     isFavorite = !isFavorite!;
     notifyListeners();
     final url = Uri.https(
       "e-commerce-d85d2-default-rtdb.firebaseio.com",
-      "/products/$id.json",
+      "/products/$id.json?auth=$token",
     );
     try {
       final response = await http.patch(url,
           body: json.encode({
             'isFavorite': isFavorite,
           }));
+      print(response.statusCode);
+
       if (response.statusCode >= 400) {
         _toggleStatusBack(oldStatus);
       }

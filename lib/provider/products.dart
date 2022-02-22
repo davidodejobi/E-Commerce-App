@@ -11,6 +11,10 @@ import '/provider/provider.dart';
 class Products with ChangeNotifier {
   List<Product> _items = [];
 
+  final String? authToken;
+
+  Products([this.authToken, this._items = const []]);
+
   Product findById(String id) {
     return _items.firstWhere((prod) => prod.id == id);
   }
@@ -23,7 +27,7 @@ class Products with ChangeNotifier {
 
   Future<void> fetchAndSetProducts() async {
     final url = Uri.parse(
-      "https://e-commerce-d85d2-default-rtdb.firebaseio.com/products.json",
+      "https://e-commerce-d85d2-default-rtdb.firebaseio.com/products.json?auth=$authToken",
     );
     try {
       final response = await http.get(url);
@@ -92,7 +96,7 @@ class Products with ChangeNotifier {
   Future<void> addProduct(Product product, SubCategory subCategory) async {
     final url = Uri.https(
       "e-commerce-d85d2-default-rtdb.firebaseio.com",
-      "/products.json",
+      "/products.json>?auth=$authToken",
     );
     try {
       final response = await http.post(url,
@@ -130,7 +134,7 @@ class Products with ChangeNotifier {
     if (prodIndex >= 0) {
       final url = Uri.https(
         "e-commerce-d85d2-default-rtdb.firebaseio.com",
-        "/products/$id.json",
+        "/products/$id.json?auth=$authToken",
       );
       http.patch(url,
           body: json.encode({
